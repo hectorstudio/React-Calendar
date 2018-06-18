@@ -44,8 +44,14 @@ class CustomDatesRangeInput extends React.Component {
   }
 
   render() {
-    const { onChange, icon, popupPosition, inline } = this.props;
-
+    const {
+      onChange,
+      icon,
+      popupPosition,
+      inline,
+      setDatesRange,
+      setStartEndDatesRange,
+    } = this.props;
     const rest = getUnhandledProps(CustomDatesRangeInput, this.props);
     const inputElement = <Input {...rest} onChange={onChange} icon={icon} />;
     if (inline) {
@@ -60,6 +66,8 @@ class CustomDatesRangeInput extends React.Component {
             popupState={on}
             handleClose={setOff}
             handleOpen={setOn}
+            setDatesRange={setDatesRange}
+            setStartEndDatesRange={setStartEndDatesRange}
           >
             {this.getPicker(setOff)}
           </Popup>
@@ -97,9 +105,10 @@ CustomDatesRangeInput.propTypes = {
   handleHeaderDateClick: PropTypes.func,
   showNextMonth: PropTypes.func,
   showPrevMonth: PropTypes.func,
-  dateToShow: PropTypes.string,
-  datesRange: PropTypes.string,
+  dateToShow: PropTypes.object,
+  datesRange: PropTypes.object,
   setDatesRange: PropTypes.func,
+  setStartEndDatesRange: PropTypes.func,
 };
 
 CustomDatesRangeInput.defaultProps = {

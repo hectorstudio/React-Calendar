@@ -37,8 +37,8 @@ DatesRangePickerContent.propTypes = {
   handleHeaderDateClick: PropTypes.func,
   showNextMonth: PropTypes.func,
   showPrevMonth: PropTypes.func,
-  dateToShow: PropTypes.string,
-  datesRange: PropTypes.string,
+  dateToShow: PropTypes.object,
+  datesRange: PropTypes.object,
   setDatesRange: PropTypes.func,
   closePopup: PropTypes.func,
 };

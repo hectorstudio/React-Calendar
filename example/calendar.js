@@ -118,7 +118,7 @@ class DateTimeForm extends React.Component {
         <br />
         <div>CUSTOM</div>
         <CustomDatesRangeInput
-          dateFormat="DD.MM.YY"
+          dateFormat="DD/MM/YYYY"
           placeholder="From - To"
           className="example-calendar-input"
           name="datesRange"
