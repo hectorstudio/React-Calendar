@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { PickerHeader, DatePickerComponent } from '../';
 
 function DatesRangePickerContent(props) {
@@ -8,7 +10,8 @@ function DatesRangePickerContent(props) {
     showPrevMonth,
     dateToShow,
     datesRange,
-    setDatesRange
+    setDatesRange,
+    closePopup,
   } = props;
   return (
     <React.Fragment>
@@ -19,16 +22,26 @@ function DatesRangePickerContent(props) {
         activeDate={dateToShow}
         activeDatesRange={datesRange}
         showWeeks
-        width="7" />
+        width="7"
+        closePopup={closePopup}
+      />
       <DatePickerComponent
         datesRange={datesRange}
         onDateClick={setDatesRange}
-        showedMonth={dateToShow} />
+        showedMonth={dateToShow}
+      />
     </React.Fragment>
   );
 }
+DatesRangePickerContent.propTypes = {
+  handleHeaderDateClick: PropTypes.func,
+  showNextMonth: PropTypes.func,
+  showPrevMonth: PropTypes.func,
+  dateToShow: PropTypes.string,
+  datesRange: PropTypes.string,
+  setDatesRange: PropTypes.func,
+  closePopup: PropTypes.func,
+};
 
 export default DatesRangePickerContent;
-export {
-  DatesRangePickerContent
-};
+export { DatesRangePickerContent };

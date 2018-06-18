@@ -4,5 +4,6 @@ export {
   DateTimeInput,
   DatesRangeInput,
   YearInput,
-  MonthInput
+  MonthInput,
+  CustomDatesRangeInput,
 } from './containers/inputs';

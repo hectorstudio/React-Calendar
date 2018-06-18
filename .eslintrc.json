@@ -1,39 +1,83 @@
 {
-  "env": {
+    "parser": "babel-eslint",
+    "env": {
       "browser": true,
-      "commonjs": true,
+      "jquery": true,
       "node": true,
+      "commonjs": true,
       "es6": true
-  },
-  "extends": ["eslint:recommended", "plugin:react/recommended"],
-  "parser": "babel-eslint",
-  "parserOptions": {
-      "ecmaFeatures": {
-          "experimentalObjectRestSpread": true,
-          "jsx": true
-      },
+    },
+    "parserOptions": {
+      "ecmaVersion": 6,
       "sourceType": "module"
-  },
-  "plugins": [
-      "react"
-  ],
-  "rules": {
-      "linebreak-style": ["error", "unix"],
-      "no-console": "warn",
-      "no-multiple-empty-lines": "error",
-      "react/jsx-uses-react": "error",
-      "react/jsx-uses-vars": "error",
-      "indent": [
-          "error",
-          2
+    },
+    "extends": [
+      "airbnb",
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "prettier",
+      "prettier/react",
+      "plugin:promise/recommended",
+      "plugin:lodash/recommended"
+    ],
+    "plugins": [
+      "react",
+      "jsx-a11y",
+      "import",
+      "prettier",
+      "no-constructor-bind",
+      "promise",
+      "lodash",
+      "no-loops"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "singleQuote": true,
+          "trailingComma": "all"
+        }
       ],
-      "quotes": [
-          "error",
-          "single"
+      "no-multiple-empty-lines": [2, {"max": 3}
       ],
-      "semi": [
-          "error",
-          "always"
-      ]
+      "complexity": [1, 14],
+      "linebreak-style": [2, "unix"],
+      "max-len": [0, 120, 4],
+      "new-cap": [2, {"newIsCap": true, "capIsNew": false}],
+      "valid-jsdoc": 0,
+      "wrap-iife": [2, "any"],
+      "import/no-extraneous-dependencies": ["warn", {"devDependencies": true}],
+      "import/no-named-as-default": 2,
+      "import/prefer-default-export": 0,
+      "react/require-default-props": 0,
+      "react/jsx-filename-extension": 0,
+      "react/no-string-refs": 2,
+      "react/forbid-prop-types": 0,
+      "react/jsx-max-props-per-line": [2, {"maximum": 2, "when": "multiline"}],
+      "no-unused-vars": 2,
+      "key-spacing": [2, {"mode": "minimum"}],
+      "arrow-body-style": [0, "as-needed", {"requireReturnForObjectLiteral": true}],
+      "react/jsx-no-bind": [2, {
+        "ignoreRefs": false,
+        "allowArrowFunctions": false,
+        "allowFunctions": false,
+        "allowBind":  false
+      }],
+      "no-extra-bind": 2,
+      "react/jsx-wrap-multilines": 0,
+      "import/extensions": ["off", "never"],
+      "react/jsx-boolean-value": 0,
+      "no-var": 2,
+      "no-constructor-bind/no-constructor-bind": 2,
+      "import/order": [2, {"newlines-between": "always"}],
+      "no-useless-constructor": 2,
+      "max-lines": [2, {"max": 500, "skipBlankLines": true}],
+      "no-underscore-dangle": 0,
+      "no-inline-comments": 2,
+      "react/jsx-no-comment-textnodes": 2,
+      "prefer-const": 2,
+      "lodash/prefer-lodash-method": [2, {"ignoreObjects": ["Colls\\.", "fields", "Meteor\\.", "UniUsers" ]}],
+      "no-loops/no-loops": 2
+    }
   }
-}
+  

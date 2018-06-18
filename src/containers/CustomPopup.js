@@ -4,17 +4,16 @@ import { Popup } from 'semantic-ui-react';
 function CustomPopup(props) {
   return (
     <Popup
-      { ...props }
+      {...props}
       flowing
       id="suirCalendarPopup"
       hideOnScroll
       on="click"
       className="suir-calendar popup"
-      hoverable />
+      hoverable
+    />
   );
 }
 
 export default CustomPopup;
-export {
-  CustomPopup
-};
+export { CustomPopup };

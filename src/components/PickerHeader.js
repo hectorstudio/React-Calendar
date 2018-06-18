@@ -1,8 +1,10 @@
 import React from 'react';
-import { Table, Icon } from 'semantic-ui-react';
+import { Table, Icon, Button } from 'semantic-ui-react';
 import ClassNames from 'classnames';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import map from 'lodash/map';
+
 import { getWeekDays, getUnhandledProps } from '../lib';
 
 function PickerHeader(props) {
@@ -16,16 +18,17 @@ function PickerHeader(props) {
     includeDay,
     showWeeks,
     width,
-    onDateClick
+    onDateClick,
   } = props;
   const rest = getUnhandledProps(PickerHeader, props);
 
   const _getWeekDayHeaders = () => {
-    return getWeekDays().map((weekDay) => (
+    return map(getWeekDays(), weekDay => (
       <Table.HeaderCell
         key={weekDay}
         className="suir-calendar week-day"
-        colSpan="1">
+        colSpan="1"
+      >
         {weekDay}
       </Table.HeaderCell>
     ));
@@ -34,29 +37,37 @@ function PickerHeader(props) {
   const cellClasses = ClassNames(
     'suir-calendar',
     'cell',
-    showWeeks? '' : 'time-picker-header'
+    showWeeks ? '' : 'time-picker-header',
   );
-  
-  const buttonClasses = ClassNames(
-    'suir-calendar',
-    'button'
-  );
+
+  const buttonClasses = ClassNames('suir-calendar', 'button');
 
   const getRangeRow = () => {
     const getContent = () => {
       const { start, end } = activeDatesRange;
       if (start && end) {
-        return start.format('MMM DD, YYYY') + ' - ' + end.format('MMM DD, YYYY');
+        return (
+          start.format('MMM DD, YYYY') + ' - ' + end.format('MMM DD, YYYY')
+        );
       }
       if (start) {
         return start.format('MMMM DD, YYYY') + ' - ' + '. . .';
       }
       return '. . . - . . .';
     };
+    const { closePopup } = props;
     return (
       <Table.Row>
         <Table.HeaderCell className="suir-calendar cell" colSpan="7">
-          { getContent() }
+          {getContent()}
+          <Button
+            icon="close"
+            floated="right"
+            size="mini"
+            circular
+            color="red"
+            onClick={closePopup}
+          />
         </Table.HeaderCell>
       </Table.Row>
     );
@@ -72,38 +83,43 @@ function PickerHeader(props) {
     }
 
     if (activeDate) {
-      return includeDay? activeDate.format('MMMM DD, YYYY') : activeDate.format('MMMM YYYY');
+      return includeDay
+        ? activeDate.format('MMMM DD, YYYY')
+        : activeDate.format('MMMM YYYY');
     }
   };
 
-  const headerCellStyle = { cursor: 'pointer '};
+  const headerCellStyle = { cursor: 'pointer ' };
 
   return (
-    <Table.Header { ...rest }>
-      { activeDatesRange && getRangeRow() }
+    <Table.Header {...rest}>
+      {activeDatesRange && getRangeRow()}
       <Table.Row>
         <Table.HeaderCell className={cellClasses} colSpan="1">
           <Icon
             fitted
             className={buttonClasses}
             onClick={onPrevBtnClick}
-            name="chevron left" />
+            name="chevron left"
+          />
         </Table.HeaderCell>
         <Table.HeaderCell
           onClick={onDateClick}
           className={cellClasses}
-          colSpan={(parseInt(width) - 2).toString()}>
-          <span style={headerCellStyle}>{ getContent() }</span>
+          colSpan={(parseInt(width) - 2).toString()}
+        >
+          <span style={headerCellStyle}>{getContent()}</span>
         </Table.HeaderCell>
         <Table.HeaderCell className={cellClasses} colSpan="1">
           <Icon
             fitted
             className={buttonClasses}
             onClick={onNextBtnClick}
-            name="chevron right" />
+            name="chevron right"
+          />
         </Table.HeaderCell>
       </Table.Row>
-      { showWeeks && <Table.Row>{ _getWeekDayHeaders() }</Table.Row> }
+      {showWeeks && <Table.Row>{_getWeekDayHeaders()}</Table.Row>}
     </Table.Header>
   );
 }
@@ -118,24 +134,23 @@ PickerHeader.propTypes = {
   activeYear: PropTypes.string,
   activeYears: PropTypes.shape({
     start: PropTypes.number,
-    end: PropTypes.number
+    end: PropTypes.number,
   }),
   activeDatesRange: PropTypes.shape({
     start: PropTypes.instanceOf(moment),
-    end: PropTypes.instanceOf(moment)
+    end: PropTypes.instanceOf(moment),
   }),
   includeDay: PropTypes.bool,
   showWeeks: PropTypes.bool,
   className: PropTypes.string,
-  onDateClick: PropTypes.func
+  onDateClick: PropTypes.func,
+  closePopup: PropTypes.func,
 };
 
 PickerHeader.defaultProps = {
   includeDay: false,
-  showWeeks: false
+  showWeeks: false,
 };
 
 export default PickerHeader;
-export {
-  PickerHeader
-};
+export { PickerHeader };
