@@ -1,21 +1,21 @@
-import React from 'react';
-import { Table } from 'semantic-ui-react';
-import PropTypes from 'prop-types';
-import Toggle from 'react-toggled';
+import React from "react";
+import { Table } from "semantic-ui-react";
+import PropTypes from "prop-types";
+import Toggle from "react-toggled";
 
-import { getUnhandledProps } from '../../lib';
-import { DATES_RANGE_INPUT } from '../../lib/COMPONENT_TYPES';
-import { DatesRangePickerContent } from '../../components/pickerContent/DatesRangePickerContent.js';
+import { getUnhandledProps } from "../../lib";
+import { DATES_RANGE_INPUT } from "../../lib/COMPONENT_TYPES";
+import { DatesRangePickerContent } from "../../components/pickerContent/DatesRangePickerContent.js";
 import {
   ControlledCustomPopup as Popup,
   CustomInput as Input,
-  withStateInput,
-} from '../';
+  withStateInput
+} from "../";
 
 class CustomDatesRangeInput extends React.Component {
   static META = {
     type: DATES_RANGE_INPUT,
-    name: 'DatesRangeInput',
+    name: "DatesRangeInput"
   };
 
   getPicker(setOff) {
@@ -26,7 +26,7 @@ class CustomDatesRangeInput extends React.Component {
       showPrevMonth,
       dateToShow,
       datesRange,
-      setDatesRange,
+      setDatesRange
     } = this.props;
     return (
       <Table {...rest} unstackable celled textAlign="center">
@@ -50,10 +50,12 @@ class CustomDatesRangeInput extends React.Component {
       popupPosition,
       inline,
       setDatesRange,
-      setStartEndDatesRange,
+      setStartEndDatesRange
     } = this.props;
     const rest = getUnhandledProps(CustomDatesRangeInput, this.props);
-    const inputElement = <Input {...rest} onChange={onChange} icon={icon} />;
+    const inputElement = (
+      <Input {...rest} onChange={onChange} icon={icon} fluid />
+    );
     if (inline) {
       return this.getPicker();
     }
@@ -92,14 +94,14 @@ CustomDatesRangeInput.propTypes = {
   /** Character that used to divide dates in string. */
   divider: PropTypes.string,
   popupPosition: PropTypes.oneOf([
-    'top left',
-    'top right',
-    'bottom left',
-    'bottom right',
-    'right center',
-    'left center',
-    'top center',
-    'bottom center',
+    "top left",
+    "top right",
+    "bottom left",
+    "bottom right",
+    "right center",
+    "left center",
+    "top center",
+    "bottom center"
   ]),
   inline: PropTypes.bool,
   handleHeaderDateClick: PropTypes.func,
@@ -108,12 +110,12 @@ CustomDatesRangeInput.propTypes = {
   dateToShow: PropTypes.object,
   datesRange: PropTypes.object,
   setDatesRange: PropTypes.func,
-  setStartEndDatesRange: PropTypes.func,
+  setStartEndDatesRange: PropTypes.func
 };
 
 CustomDatesRangeInput.defaultProps = {
-  icon: 'calendar',
-  inline: false,
+  icon: "calendar",
+  inline: false
 };
 
 const WrappedDatesRangeInput = withStateInput(CustomDatesRangeInput);

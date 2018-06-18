@@ -4,14 +4,15 @@
 
 .suir-calendar.week-day {
   border: none !important;
-  border-bottom: 1px solid rgba(34,36,38,.1) !important;
+  border-bottom: 1px solid rgba(34, 36, 38, 0.1) !important;
 }
 
 .suir-calendar.time-picker-header {
-  border-bottom: 1px solid rgba(34,36,38,.1) !important;
+  border-bottom: 1px solid rgba(34, 36, 38, 0.1) !important;
 }
 
-.suir-calendar.date:hover, .suir-calendar.time:hover {
+.suir-calendar.date:hover,
+.suir-calendar.time:hover {
   outline: 1px solid #85b7d9;
   cursor: pointer;
 }
@@ -25,5 +26,7 @@
 }
 
 .right-column-button-wrapper {
-  padding: 10px,
+  padding: 3px;
+  margin-left: 10px;
+  margin-top: 6px;
 }
