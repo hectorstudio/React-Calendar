@@ -1,24 +1,24 @@
-import React from "react";
-import { Table } from "semantic-ui-react";
-import PropTypes from "prop-types";
-import Toggle from "react-toggled";
+import React from 'react';
+import { Table } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
+import Toggle from 'react-toggled';
 
-import { getUnhandledProps } from "../../lib";
-import { DATES_RANGE_INPUT } from "../../lib/COMPONENT_TYPES";
-import { DatesRangePickerContent } from "../../components/pickerContent/DatesRangePickerContent.js";
+import { getUnhandledProps } from '../../lib';
+import { DATES_RANGE_INPUT } from '../../lib/COMPONENT_TYPES';
+import { DatesRangePickerContent } from '../../components/pickerContent/DatesRangePickerContent.js';
 import {
   ControlledCustomPopup as Popup,
   CustomInput as Input,
-  withStateInput
-} from "../";
+  withStateInput,
+} from '../';
 
 class CustomDatesRangeInput extends React.Component {
   static META = {
     type: DATES_RANGE_INPUT,
-    name: "DatesRangeInput"
+    name: 'CustomDatesRangeInput',
   };
 
-  getPicker(setOff) {
+  getPicker() {
     const rest = getUnhandledProps(CustomDatesRangeInput, this.props);
     const {
       handleHeaderDateClick,
@@ -26,7 +26,7 @@ class CustomDatesRangeInput extends React.Component {
       showPrevMonth,
       dateToShow,
       datesRange,
-      setDatesRange
+      setDatesRange,
     } = this.props;
     return (
       <Table {...rest} unstackable celled textAlign="center">
@@ -37,7 +37,6 @@ class CustomDatesRangeInput extends React.Component {
           dateToShow={dateToShow}
           datesRange={datesRange}
           setDatesRange={setDatesRange}
-          closePopup={setOff}
         />
       </Table>
     );
@@ -50,11 +49,22 @@ class CustomDatesRangeInput extends React.Component {
       popupPosition,
       inline,
       setDatesRange,
-      setStartEndDatesRange
+      setStartEndDatesRange,
+      datesRange: { start, end },
+      dateFormat,
     } = this.props;
     const rest = getUnhandledProps(CustomDatesRangeInput, this.props);
+    const datesRangeInputValue = `${start ? start.format(dateFormat) : ''} - ${
+      end ? end.format(dateFormat) : ''
+    }`;
     const inputElement = (
-      <Input {...rest} onChange={onChange} icon={icon} fluid />
+      <Input
+        {...rest}
+        onChange={onChange}
+        icon={icon}
+        value={datesRangeInputValue}
+        fluid
+      />
     );
     if (inline) {
       return this.getPicker();
@@ -71,7 +81,7 @@ class CustomDatesRangeInput extends React.Component {
             setDatesRange={setDatesRange}
             setStartEndDatesRange={setStartEndDatesRange}
           >
-            {this.getPicker(setOff)}
+            {this.getPicker()}
           </Popup>
         )}
       </Toggle>
@@ -84,6 +94,7 @@ CustomDatesRangeInput.propTypes = {
    * @param {SyntheticEvent} event React's original SyntheticEvent.
    * @param {object} data All props and proposed value.
    */
+  onRangeChange: PropTypes.func,
   onChange: PropTypes.func,
   /** Same as semantic-ui-react Input's ``icon`` prop. */
   icon: PropTypes.any,
@@ -94,14 +105,14 @@ CustomDatesRangeInput.propTypes = {
   /** Character that used to divide dates in string. */
   divider: PropTypes.string,
   popupPosition: PropTypes.oneOf([
-    "top left",
-    "top right",
-    "bottom left",
-    "bottom right",
-    "right center",
-    "left center",
-    "top center",
-    "bottom center"
+    'top left',
+    'top right',
+    'bottom left',
+    'bottom right',
+    'right center',
+    'left center',
+    'top center',
+    'bottom center',
   ]),
   inline: PropTypes.bool,
   handleHeaderDateClick: PropTypes.func,
@@ -110,12 +121,12 @@ CustomDatesRangeInput.propTypes = {
   dateToShow: PropTypes.object,
   datesRange: PropTypes.object,
   setDatesRange: PropTypes.func,
-  setStartEndDatesRange: PropTypes.func
+  setStartEndDatesRange: PropTypes.func,
 };
 
 CustomDatesRangeInput.defaultProps = {
-  icon: "calendar",
-  inline: false
+  icon: 'calendar',
+  inline: false,
 };
 
 const WrappedDatesRangeInput = withStateInput(CustomDatesRangeInput);

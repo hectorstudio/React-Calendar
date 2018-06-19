@@ -88,7 +88,7 @@ class DateTimeForm extends React.Component {
           onChange={this.handleChange}
         />
         <br />
-        <DatesRangeInput
+        {/* <DatesRangeInput
           dateFormat="DD.MM.YY"
           placeholder="From - To"
           className="example-calendar-input"
@@ -96,7 +96,7 @@ class DateTimeForm extends React.Component {
           value={this.state.datesRange}
           iconPosition="left"
           onChange={this.handleChange}
-        />
+        /> */}
         <br />
         <YearInput
           placeholder="Year"
@@ -122,9 +122,12 @@ class DateTimeForm extends React.Component {
           placeholder="From - To"
           className="example-calendar-input"
           name="datesRange"
-          value={this.state.datesRange}
+          // value={this.state.datesRange}
           iconPosition="left"
           onChange={this.handleChange}
+          range={{ start: moment(), end: moment() }}
+          datesRange={{ start: moment(), end: moment() }}
+          onRangeChange={d => console.log('d', d)}
         />
       </Form>
     );

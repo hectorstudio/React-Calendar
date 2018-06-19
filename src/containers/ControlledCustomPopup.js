@@ -111,10 +111,12 @@ class ControlledCustomPopup extends React.Component {
                     icon="check"
                     onClick={handleClose}
                     fluid
+                    color="blue"
                   />
                 </div>
                 {map(this.data, d => (
                   <CustomButton
+                    key={d.content}
                     content={d.content}
                     onClick={this._onButtonClick}
                     start={d.start}
@@ -129,16 +131,6 @@ class ControlledCustomPopup extends React.Component {
     );
   }
 }
-// function ControlledCustomPopup(props) {
-
-//   const
-//   console.log('props', props);
-//   const passProp = { ...props };
-//   delete passProp.popupState;
-//   delete passProp.handleClose;
-//   delete passProp.handleOpen;
-
-// }
 
 ControlledCustomPopup.propTypes = {
   popupState: PropTypes.bool,
