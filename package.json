@@ -8,26 +8,21 @@
     "start": "npx webpack-dev-server",
     "prebuild": "npx rimraf dist/*",
     "build": "npx babel src -d dist",
-    "build:css": "npx mkdirp dist/css && uglifycss src/css/calendar.css > dist/css/calendar.min.css",
+    "build:css":
+      "npx mkdirp dist/css && uglifycss src/css/calendar.css > dist/css/calendar.min.css",
     "build:ts": "npx cpy **/*.d.ts ../dist/ --cwd=src --parents",
     "build:example:css": "npx cpy src/css/calendar.css example",
-    "postbuild": "npm run build:css && npm run build:ts && npm run build:example:css"
+    "postbuild":
+      "npm run build:css && npm run build:ts && npm run build:example:css",
+    "postinstall": "npm run build && npm run postbuild"
   },
-  "keywords": [
-    "semantic",
-    "react",
-    "calendar",
-    "datepicker"
-  ],
+  "keywords": ["semantic", "react", "calendar", "datepicker"],
   "author": "Artem Fedulov <arfedulov@gmail.com>",
   "homepage": "https://github.com/arfedulov/semantic-ui-calendar-react#readme",
   "bugs": {
     "url": "https://github.com/arfedulov/semantic-ui-calendar-react/issues"
   },
-  "files": [
-    "src",
-    "dist"
-  ],
+  "files": ["src", "dist"],
   "repository": {
     "type": "git",
     "url": "https://github.com/arfedulov/semantic-ui-calendar-react.git"
@@ -44,19 +39,33 @@
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
     "babel-loader": "^7.1.4",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-react-handled-props": "^1.0.0",
     "babel-plugin-transform-react-jsx-source": "^6.22.0",
     "babel-preset-airbnb": "^2.4.0",
     "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-es2016": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
     "babel-register": "^6.26.0",
+    "babel-root-slash-import": "^1.1.0",
+    "babel-traverse": "^6.22.1",
     "cpy-cli": "^1.0.1",
     "doubler": "^0.6.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-lodash": "^2.7.0",
+    "eslint-plugin-no-constructor-bind": "^1.0.0",
+    "eslint-plugin-no-loops": "^0.3.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-react": "^7.8.2",
     "mkdirp": "^0.5.1",
     "mockdate": "^2.0.2",
@@ -76,6 +85,7 @@
     "classnames": "^2.2.5",
     "lodash": "^4.17.10",
     "moment": "^2.22.1",
-    "prop-types": "^15.6.1"
+    "prop-types": "^15.6.1",
+    "react-toggled": "^1.2.7"
   }
 }

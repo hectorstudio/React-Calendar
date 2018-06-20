@@ -1,9 +1,11 @@
-import React from 'react';
-import { Table, Icon } from 'semantic-ui-react';
-import ClassNames from 'classnames';
-import PropTypes from 'prop-types';
-import moment from 'moment';
-import { getWeekDays, getUnhandledProps } from '../lib';
+import React from "react";
+import { Table, Icon, Button } from "semantic-ui-react";
+import ClassNames from "classnames";
+import PropTypes from "prop-types";
+import moment from "moment";
+import map from "lodash/map";
+
+import { getWeekDays, getUnhandledProps } from "../lib";
 
 function PickerHeader(props) {
   const {
@@ -21,42 +23,42 @@ function PickerHeader(props) {
   const rest = getUnhandledProps(PickerHeader, props);
 
   const _getWeekDayHeaders = () => {
-    return getWeekDays().map((weekDay) => (
+    return map(getWeekDays(), weekDay => (
       <Table.HeaderCell
         key={weekDay}
         className="suir-calendar week-day"
-        colSpan="1">
+        colSpan="1"
+      >
         {weekDay}
       </Table.HeaderCell>
     ));
   };
 
   const cellClasses = ClassNames(
-    'suir-calendar',
-    'cell',
-    showWeeks? '' : 'time-picker-header'
+    "suir-calendar",
+    "cell",
+    showWeeks ? "" : "time-picker-header"
   );
-  
-  const buttonClasses = ClassNames(
-    'suir-calendar',
-    'button'
-  );
+
+  const buttonClasses = ClassNames("suir-calendar", "button");
 
   const getRangeRow = () => {
     const getContent = () => {
       const { start, end } = activeDatesRange;
       if (start && end) {
-        return start.format('MMM DD, YYYY') + ' - ' + end.format('MMM DD, YYYY');
+        return (
+          start.format("MMM DD, YYYY") + " - " + end.format("MMM DD, YYYY")
+        );
       }
       if (start) {
-        return start.format('MMMM DD, YYYY') + ' - ' + '. . .';
+        return start.format("MMMM DD, YYYY") + " - " + ". . .";
       }
-      return '. . . - . . .';
+      return ". . . - . . .";
     };
     return (
       <Table.Row>
         <Table.HeaderCell className="suir-calendar cell" colSpan="7">
-          { getContent() }
+          {getContent()}
         </Table.HeaderCell>
       </Table.Row>
     );
@@ -72,38 +74,43 @@ function PickerHeader(props) {
     }
 
     if (activeDate) {
-      return includeDay? activeDate.format('MMMM DD, YYYY') : activeDate.format('MMMM YYYY');
+      return includeDay
+        ? activeDate.format("MMMM DD, YYYY")
+        : activeDate.format("MMMM YYYY");
     }
   };
 
-  const headerCellStyle = { cursor: 'pointer '};
+  const headerCellStyle = { cursor: "pointer " };
 
   return (
-    <Table.Header { ...rest }>
-      { activeDatesRange && getRangeRow() }
+    <Table.Header {...rest}>
+      {activeDatesRange && getRangeRow()}
       <Table.Row>
         <Table.HeaderCell className={cellClasses} colSpan="1">
           <Icon
             fitted
             className={buttonClasses}
             onClick={onPrevBtnClick}
-            name="chevron left" />
+            name="chevron left"
+          />
         </Table.HeaderCell>
         <Table.HeaderCell
           onClick={onDateClick}
           className={cellClasses}
-          colSpan={(parseInt(width) - 2).toString()}>
-          <span style={headerCellStyle}>{ getContent() }</span>
+          colSpan={(parseInt(width) - 2).toString()}
+        >
+          <span style={headerCellStyle}>{getContent()}</span>
         </Table.HeaderCell>
         <Table.HeaderCell className={cellClasses} colSpan="1">
           <Icon
             fitted
             className={buttonClasses}
             onClick={onNextBtnClick}
-            name="chevron right" />
+            name="chevron right"
+          />
         </Table.HeaderCell>
       </Table.Row>
-      { showWeeks && <Table.Row>{ _getWeekDayHeaders() }</Table.Row> }
+      {showWeeks && <Table.Row>{_getWeekDayHeaders()}</Table.Row>}
     </Table.Header>
   );
 }
@@ -136,6 +143,4 @@ PickerHeader.defaultProps = {
 };
 
 export default PickerHeader;
-export {
-  PickerHeader
-};
+export { PickerHeader };
