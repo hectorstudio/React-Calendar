@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Table } from 'semantic-ui-react';
 import ClassNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -6,7 +6,7 @@ import moment from 'moment';
 
 import { getUnhandledProps } from '../lib';
 
-class DatePickerCell extends React.Component {
+class DatePickerCell extends Component {
   onCellClick = event => {
     event.stopPropagation();
     const { onClick, data } = this.props;
@@ -32,4 +32,3 @@ DatePickerCell.propTypes = {
 };
 
 export default DatePickerCell;
-export { DatePickerCell };

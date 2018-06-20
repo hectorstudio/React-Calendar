@@ -11,7 +11,7 @@ import {
   getUnhandledProps,
 } from '../lib';
 
-import { DatePickerCell as Cell } from './DatePickerCell.js';
+import DatePickerCell from './DatePickerCell.js';
 
 function DatePickerComponent(props) {
   const { onDateClick, activeDate, showedMonth, datesRange } = props;
@@ -22,7 +22,7 @@ function DatePickerComponent(props) {
       const active = isActiveDate(day, activeDate || datesRange);
       const disabled = !isDayInMonth(day, showedMonth);
       return (
-        <Cell
+        <DatePickerCell
           onClick={onDateClick}
           active={active}
           disabled={disabled}

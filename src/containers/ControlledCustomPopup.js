@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Popup, Grid, Button } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -22,7 +22,7 @@ CustomButton.propTypes = {
   end: PropTypes.instanceOf(moment),
 };
 
-class ControlledCustomPopup extends React.Component {
+class ControlledCustomPopup extends Component {
   data = [
     {
       content: 'Today',

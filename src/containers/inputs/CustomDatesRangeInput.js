@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import Toggle from 'react-toggled';
@@ -12,7 +12,7 @@ import {
   withStateInput,
 } from '../';
 
-class CustomDatesRangeInput extends React.Component {
+class CustomDatesRangeInput extends Component {
   static META = {
     type: DATES_RANGE_INPUT,
     name: 'CustomDatesRangeInput',

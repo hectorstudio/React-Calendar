@@ -37,7 +37,6 @@ class DateTimeForm extends React.Component {
       dateStartYear: '',
       time: '',
       dateTime: '',
-      datesRange: '',
     };
   }
 
@@ -87,16 +86,6 @@ class DateTimeForm extends React.Component {
           iconPosition="left"
           onChange={this.handleChange}
         />
-        <br />
-        {/* <DatesRangeInput
-          dateFormat="DD.MM.YY"
-          placeholder="From - To"
-          className="example-calendar-input"
-          name="datesRange"
-          value={this.state.datesRange}
-          iconPosition="left"
-          onChange={this.handleChange}
-        /> */}
         <br />
         <YearInput
           placeholder="Year"
