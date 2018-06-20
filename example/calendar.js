@@ -1,15 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Form } from 'semantic-ui-react';
+import moment from 'moment';
+
 import {
   DateInput,
   TimeInput,
   DateTimeInput,
   DatesRangeInput,
+  CustomDatesRangeInput,
   YearInput,
-  MonthInput
+  MonthInput,
 } from '../src';
-import moment from 'moment';
 
 moment.locale('en');
 
@@ -35,15 +37,14 @@ class DateTimeForm extends React.Component {
       dateStartYear: '',
       time: '',
       dateTime: '',
-      datesRange: ''
     };
   }
 
-  handleChange = (event, {name, value}) => {
+  handleChange = (event, { name, value }) => {
     if (this.state.hasOwnProperty(name)) {
       this.setState({ [name]: value });
     }
-  }
+  };
 
   render() {
     return (
@@ -54,7 +55,8 @@ class DateTimeForm extends React.Component {
           name="date"
           value={this.state.date}
           iconPosition="left"
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+        />
         <br />
         <DateInput
           startMode="year"
@@ -64,7 +66,8 @@ class DateTimeForm extends React.Component {
           name="dateStartYear"
           value={this.state.dateStartYear}
           iconPosition="left"
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+        />
         <br />
         <TimeInput
           placeholder="Time"
@@ -72,7 +75,8 @@ class DateTimeForm extends React.Component {
           name="time"
           value={this.state.time}
           iconPosition="left"
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+        />
         <br />
         <DateTimeInput
           placeholder="Date Time"
@@ -80,16 +84,8 @@ class DateTimeForm extends React.Component {
           name="dateTime"
           value={this.state.dateTime}
           iconPosition="left"
-          onChange={this.handleChange} />
-        <br />
-        <DatesRangeInput
-          dateFormat="DD.MM.YY"
-          placeholder="From - To"
-          className="example-calendar-input"
-          name="datesRange"
-          value={this.state.datesRange}
-          iconPosition="left"
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+        />
         <br />
         <YearInput
           placeholder="Year"
@@ -97,7 +93,8 @@ class DateTimeForm extends React.Component {
           name="year"
           value={this.state.year}
           iconPosition="left"
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+        />
         <br />
         <MonthInput
           placeholder="Month"
@@ -105,7 +102,22 @@ class DateTimeForm extends React.Component {
           name="month"
           value={this.state.month}
           iconPosition="left"
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+        />
+        <br />
+        <div>CUSTOM</div>
+        <CustomDatesRangeInput
+          dateFormat="DD/MM/YYYY"
+          placeholder="From - To"
+          className="example-calendar-input"
+          name="datesRange"
+          // value={this.state.datesRange}
+          iconPosition="left"
+          onChange={this.handleChange}
+          range={{ start: moment(), end: moment() }}
+          datesRange={{ start: moment(), end: moment() }}
+          onRangeChange={d => console.log('d', d)}
+        />
       </Form>
     );
   }
@@ -121,33 +133,33 @@ class DateTimeFormInline extends React.Component {
       date: '',
       time: '',
       dateTime: '',
-      datesRange: ''
+      datesRange: '',
     };
   }
 
   handleYearChange = (event, { value }) => {
     this.setState({ year: value });
-  }
+  };
 
   handleMonthChange = (event, { value }) => {
     this.setState({ month: value });
-  }
+  };
 
   handleDateChange = (event, { value }) => {
     this.setState({ date: value });
-  }
+  };
 
   handleTimeChange = (event, { value }) => {
     this.setState({ time: value });
-  }
+  };
 
   handleDateTimeChange = (event, { value }) => {
     this.setState({ dateTime: value });
-  }
+  };
 
   handleDatesRangeChange = (event, { value }) => {
     this.setState({ datesRange: value });
-  }
+  };
 
   render() {
     return (
@@ -156,43 +168,46 @@ class DateTimeFormInline extends React.Component {
           inline
           className="example-calendar-input"
           value={this.state.date}
-          onChange={this.handleDateChange} />
+          onChange={this.handleDateChange}
+        />
         <br />
         <TimeInput
           inline
           className="example-calendar-input"
           value={this.state.time}
-          onChange={this.handleTimeChange} />
+          onChange={this.handleTimeChange}
+        />
         <br />
         <DateTimeInput
           inline
           className="example-calendar-input"
           value={this.state.dateTime}
-          onChange={this.handleDateTimeChange} />
+          onChange={this.handleDateTimeChange}
+        />
         <br />
         <DatesRangeInput
           inline
           className="example-calendar-input"
           value={this.state.datesRange}
-          onChange={this.handleDatesRangeChange} />
+          onChange={this.handleDatesRangeChange}
+        />
         <br />
         <YearInput
           inline
           className="example-calendar-input"
           value={this.state.year}
-          onChange={this.handleYearChange} />
+          onChange={this.handleYearChange}
+        />
         <br />
         <MonthInput
           inline
           className="example-calendar-input"
           value={this.state.month}
-          onChange={this.handleMonthChange} />
+          onChange={this.handleMonthChange}
+        />
       </Form>
     );
   }
 }
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-);
+ReactDOM.render(<App />, document.getElementById('root'));

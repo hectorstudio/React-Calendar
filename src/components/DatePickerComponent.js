@@ -1,53 +1,44 @@
 import React from 'react';
 import { Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import { DatePickerCell as Cell } from './DatePickerCell.js';
 import moment from 'moment';
-import { 
+import map from 'lodash/map';
+
+import {
   isActiveDate,
   isDayInMonth,
   getArrayOfWeeks,
-  getUnhandledProps
+  getUnhandledProps,
 } from '../lib';
 
+import DatePickerCell from './DatePickerCell.js';
+
 function DatePickerComponent(props) {
-  const {
-    onDateClick,
-    activeDate,
-    showedMonth,
-    datesRange
-  } = props;
+  const { onDateClick, activeDate, showedMonth, datesRange } = props;
   const rest = getUnhandledProps(DatePickerComponent, props);
   const data = getArrayOfWeeks(showedMonth);
   const _getRow = (week, key) => {
-    const days = week.map((day) => {
+    const days = map(week, day => {
       const active = isActiveDate(day, activeDate || datesRange);
       const disabled = !isDayInMonth(day, showedMonth);
       return (
-        <Cell
+        <DatePickerCell
           onClick={onDateClick}
           active={active}
           disabled={disabled}
           data={day}
-          key={day.format('DD-MM-YYYY')} />
+          key={day.format('DD-MM-YYYY')}
+        />
       );
     });
-    return (
-      <Table.Row key={key}>
-        { days }
-      </Table.Row>
-    );
+    return <Table.Row key={key}>{days}</Table.Row>;
   };
 
-  const _getTableContent = (weeks) => {
-    return weeks.map((week) => _getRow(week, week[0].format('YYYY-MM-DD')));
+  const _getTableContent = weeks => {
+    return map(weeks, week => _getRow(week, week[0].format('YYYY-MM-DD')));
   };
 
-  return (
-    <Table.Body { ...rest }>
-      { _getTableContent(data) }
-    </Table.Body>
-  );
+  return <Table.Body {...rest}>{_getTableContent(data)}</Table.Body>;
 }
 
 DatePickerComponent.propTypes = {
@@ -60,11 +51,9 @@ DatePickerComponent.propTypes = {
   /** Dates range */
   datesRange: PropTypes.shape({
     start: PropTypes.instanceOf(moment),
-    end: PropTypes.instanceOf(moment)
-  })
+    end: PropTypes.instanceOf(moment),
+  }),
 };
 
 export default DatePickerComponent;
-export {
-  DatePickerComponent
-};
+export { DatePickerComponent };
