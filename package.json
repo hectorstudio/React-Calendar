@@ -2,7 +2,7 @@
   "name": "semantic-ui-calendar-react",
   "version": "0.5.0",
   "description": "date/time picker built from semantic-ui elements",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "npx tape -r babel-register ./test/test*.js | tap-spec",
     "start": "npx webpack-dev-server",
@@ -13,7 +13,8 @@
     "build:ts": "npx cpy **/*.d.ts ../dist/ --cwd=src --parents",
     "build:example:css": "npx cpy src/css/calendar.css example",
     "postbuild":
-      "npm run build:css && npm run build:ts && npm run build:example:css"
+      "npm run build:css && npm run build:ts && npm run build:example:css",
+    "prepare": "npm run build"
   },
   "keywords": ["semantic", "react", "calendar", "datepicker"],
   "author": "Artem Fedulov <arfedulov@gmail.com>",
