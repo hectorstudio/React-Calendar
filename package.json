@@ -13,8 +13,7 @@
     "build:ts": "npx cpy **/*.d.ts ../dist/ --cwd=src --parents",
     "build:example:css": "npx cpy src/css/calendar.css example",
     "postbuild":
-      "npm run build:css && npm run build:ts && npm run build:example:css",
-    "postinstall": "npm run build && npm run postbuild"
+      "npm run build:css && npm run build:ts && npm run build:example:css"
   },
   "keywords": ["semantic", "react", "calendar", "datepicker"],
   "author": "Artem Fedulov <arfedulov@gmail.com>",
