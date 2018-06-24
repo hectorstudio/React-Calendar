@@ -49,10 +49,7 @@ DatePickerComponent.propTypes = {
   /** Currently selected date */
   activeDate: PropTypes.instanceOf(moment),
   /** Dates range */
-  datesRange: PropTypes.shape({
-    start: PropTypes.instanceOf(moment),
-    end: PropTypes.instanceOf(moment),
-  }),
+  datesRange: PropTypes.object,
 };
 
 export default DatePickerComponent;
