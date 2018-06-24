@@ -54,11 +54,8 @@ function withStateInput(WrappedComponent) {
       pickDateTime: PropTypes.bool,
       pickDatesRange: PropTypes.bool,
       divider: PropTypes.string,
+      datesRange: PropTypes.object,
       onRangeChange: PropTypes.func,
-      datesRange: PropTypes.shape({
-        start: PropTypes.instanceOf(moment),
-        end: PropTypes.instanceOf(moment),
-      }),
     };
 
     static defaultProps = {
@@ -235,12 +232,10 @@ function withStateInput(WrappedComponent) {
     setStartEndDatesRange = (event, data) => {
       const { onDatesRangeChange } = this;
       const { start, end } = data;
-      const { onRangeChange } = this.props;
       const newState = {
         datesRange: { start, end },
       };
       this.setState(newState, () => {
-        onRangeChange({ start, end });
         onDatesRangeChange(
           event,
           cloneReplaceValue(
@@ -255,14 +250,12 @@ function withStateInput(WrappedComponent) {
     };
     setDatesRange = (event, data) => {
       const { onDatesRangeChange } = this;
-      const { onRangeChange } = this.props;
       this.setState(({ datesRange }) => {
         let newState;
         if (datesRange.start && datesRange.end) {
           newState = {
             datesRange: { start: null, end: null },
           };
-          onRangeChange({ start: null, end: null });
           onDatesRangeChange(
             event,
             cloneReplaceValue(data, this.getDatesRange()),
@@ -275,7 +268,6 @@ function withStateInput(WrappedComponent) {
             event,
             cloneReplaceValue(data, this.getDatesRange()),
           );
-          onRangeChange({ start: null, end: null });
         } else if (datesRange.start) {
           newState = {
             datesRange: { start: datesRange.start, end: data.value },
@@ -290,12 +282,10 @@ function withStateInput(WrappedComponent) {
               }),
             ),
           );
-          onRangeChange({ start: datesRange.start, end: data.value });
         } else {
           newState = {
             datesRange: { start: data.value, end: datesRange.end },
           };
-          onRangeChange({ start: data.value, end: datesRange.end });
           onDatesRangeChange(
             event,
             cloneReplaceValue(
