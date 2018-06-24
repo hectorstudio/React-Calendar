@@ -52,7 +52,6 @@ class DateTimeForm extends React.Component {
           className="example-calendar-input"
           name="datesRange"
           iconPosition="left"
-          onChange={this.handleChange}
           datesRange={this.state.customDateRanges}
         />
       </Form>
