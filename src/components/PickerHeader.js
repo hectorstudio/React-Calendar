@@ -50,9 +50,9 @@ function PickerHeader(props) {
         );
       }
       if (start) {
-        return start.format('MMMM DD, YYYY') + ' - ' + '. . .';
+        return start.format("MMMM DD, YYYY") + " - " + ". . .";
       }
-      return '. . . - . . .';
+      return ". . . - . . .";
     };
     return (
       <Table.Row>

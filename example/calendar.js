@@ -40,7 +40,9 @@ class DateTimeForm extends React.Component {
       this.setState({ [name]: value });
     }
   };
-
+  _onRangeChange = datesRange => {
+    this.setState({ customDateRanges: datesRange });
+  };
   render() {
     return (
       <Form>
@@ -53,6 +55,7 @@ class DateTimeForm extends React.Component {
           name="datesRange"
           iconPosition="left"
           datesRange={this.state.customDateRanges}
+          onRangeChange={this._onRangeChange}
         />
       </Form>
     );
