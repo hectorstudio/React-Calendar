@@ -121,14 +121,8 @@ PickerHeader.propTypes = {
   /** calendar shows date of this `moment` */
   activeDate: PropTypes.instanceOf(moment),
   activeYear: PropTypes.string,
-  activeYears: PropTypes.shape({
-    start: PropTypes.number,
-    end: PropTypes.number,
-  }),
-  activeDatesRange: PropTypes.shape({
-    start: PropTypes.instanceOf(moment),
-    end: PropTypes.instanceOf(moment),
-  }),
+  activeYears: PropTypes.object,
+  activeDatesRange: PropTypes.object,
   includeDay: PropTypes.bool,
   showWeeks: PropTypes.bool,
   onDateClick: PropTypes.func,
