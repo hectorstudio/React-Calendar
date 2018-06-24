@@ -29,9 +29,23 @@ class CustomDatesRangeInput extends Component {
     type: DATES_RANGE_INPUT,
     name: 'CustomDatesRangeInput',
   };
-  state = {
-    datesRangeInputValue: '',
-  };
+  // state = {
+  //   datesRangeInputValue: '',
+  // };
+  constructor(props) {
+    super(props);
+    const { datesRange } = props;
+    if (datesRange) {
+      const { start, end } = datesRange;
+      const { dateFormat } = props;
+      const datesRangeInputValue = `${
+        start ? start.format(dateFormat) : ''
+      } - ${end ? end.format(dateFormat) : ''}`;
+      this.state = {
+        datesRangeInputValue,
+      };
+    }
+  }
   componentWillReceiveProps = nextProps => {
     const { datesRange } = nextProps;
     if (datesRange) {
