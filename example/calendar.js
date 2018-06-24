@@ -1,11 +1,11 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { Form } from "semantic-ui-react";
-import moment from "moment";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Form } from 'semantic-ui-react';
+import moment from 'moment';
 
-import { CustomDatesRangeInput } from "../src";
+import { CustomDatesRangeInput } from '../src';
 
-moment.locale("en");
+moment.locale('en');
 
 function App() {
   return (
@@ -21,17 +21,17 @@ class DateTimeForm extends React.Component {
     super(props);
 
     this.state = {
-      year: "",
-      month: "",
-      date: "",
-      dateStartYear: "",
-      time: "",
-      dateTime: "",
-      datesRange: "",
+      year: '',
+      month: '',
+      date: '',
+      dateStartYear: '',
+      time: '',
+      dateTime: '',
+      datesRange: '',
       customDateRanges: {
         start: moment(),
-        end: moment()
-      }
+        end: moment(),
+      },
     };
   }
 
@@ -59,4 +59,4 @@ class DateTimeForm extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById('root'));
