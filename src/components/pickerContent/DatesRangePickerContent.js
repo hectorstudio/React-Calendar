@@ -10,8 +10,8 @@ function DatesRangePickerContent(props) {
     showPrevMonth,
     dateToShow,
     datesRange,
-    setDatesRange,
     closePopup,
+    setDatesRange,
   } = props;
   return (
     <React.Fragment>
@@ -27,7 +27,7 @@ function DatesRangePickerContent(props) {
       />
       <DatePickerComponent
         datesRange={datesRange}
-        onDateClick={setDatesRange}
+        setDatesRange={setDatesRange}
         showedMonth={dateToShow}
       />
     </React.Fragment>
