@@ -78,20 +78,23 @@ class ControlledCustomPopup extends Component {
   };
   _setStartEnd = (start, end) => {
     const { setStartEndDatesRange } = this.props;
-    setStartEndDatesRange(event, {
+    const datesRange = {
       start,
       end,
-    });
+    };
+    setStartEndDatesRange(event, datesRange);
   };
   render() {
-    const { popupState, handleClose, handleOpen, children } = this.props;
-    const popupProps = { ...this.props };
-    delete popupProps.handleClose;
-    delete popupProps.handleOpen;
-    delete popupProps.popupState;
+    const {
+      popupState,
+      handleClose,
+      handleOpen,
+      children,
+      trigger,
+    } = this.props;
     return (
       <Popup
-        {...popupProps}
+        trigger={trigger}
         flowing
         id="suirCalendarPopup"
         open={popupState}
@@ -137,7 +140,7 @@ ControlledCustomPopup.propTypes = {
   handleOpen: PropTypes.func,
   handleClose: PropTypes.func,
   children: PropTypes.object,
-  setDatesRange: PropTypes.func,
+  trigger: PropTypes.object,
   setStartEndDatesRange: PropTypes.func,
 };
 

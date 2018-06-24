@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import Toggle from 'react-toggled';
+import split from 'lodash/split';
+import trim from 'lodash/trim';
+import moment from 'moment';
 
 import { getUnhandledProps } from '../../lib';
 import { DATES_RANGE_INPUT } from '../../lib/COMPONENT_TYPES';
@@ -12,12 +15,48 @@ import {
   withStateInput,
 } from '../';
 
+const validateDate = (date, dateFormat) => {
+  const splitData = split(date, '-');
+  if (splitData.length == 2) {
+    const start = moment(trim(splitData[0]), dateFormat, true);
+    const end = moment(trim(splitData[1]), dateFormat, true);
+    if (start.isValid() && end.isValid()) return { start, end };
+  }
+};
+
 class CustomDatesRangeInput extends Component {
   static META = {
     type: DATES_RANGE_INPUT,
     name: 'CustomDatesRangeInput',
   };
-
+  // state = {
+  //   datesRangeInputValue: '',
+  // };
+  constructor(props) {
+    super(props);
+    const { datesRange } = props;
+    if (datesRange) {
+      const { start, end } = datesRange;
+      const { dateFormat } = props;
+      const datesRangeInputValue = `${
+        start ? start.format(dateFormat) : ''
+      } - ${end ? end.format(dateFormat) : ''}`;
+      this.state = {
+        datesRangeInputValue,
+      };
+    }
+  }
+  componentWillReceiveProps = nextProps => {
+    const { datesRange } = nextProps;
+    if (datesRange) {
+      const { start, end } = datesRange;
+      const { dateFormat } = this.props;
+      const datesRangeInputValue = `${
+        start ? start.format(dateFormat) : ''
+      } - ${end ? end.format(dateFormat) : ''}`;
+      this.setState({ datesRangeInputValue });
+    }
+  };
   getPicker() {
     const rest = getUnhandledProps(CustomDatesRangeInput, this.props);
     const {
@@ -28,8 +67,9 @@ class CustomDatesRangeInput extends Component {
       datesRange,
       setDatesRange,
     } = this.props;
+    delete rest.onDatesRangeChange;
     return (
-      <Table {...rest} unstackable celled textAlign="center">
+      <Table unstackable celled textAlign="center">
         <DatesRangePickerContent
           handleHeaderDateClick={handleHeaderDateClick}
           showNextMonth={showNextMonth}
@@ -41,31 +81,49 @@ class CustomDatesRangeInput extends Component {
       </Table>
     );
   }
+  _onChange = e => {
+    const value = e.target.value;
+    const { dateFormat, setStartEndDatesRange } = this.props;
+    const date = validateDate(value, dateFormat);
+    if (date) {
+      setStartEndDatesRange(null, date);
+    }
+    this.setState({ datesRangeInputValue: value });
+  };
+  _getInput = () => {
+    const {
+      className,
+      iconPosition,
+      mode,
+      name,
+      placeholder,
+      icon,
+    } = this.props;
+    const { datesRangeInputValue } = this.state;
 
+    return (
+      <Input
+        className={className}
+        iconPosition={iconPosition}
+        mode={mode}
+        name={name}
+        placeholder={placeholder}
+        ref={this.input}
+        onChange={this._onChange}
+        icon={icon}
+        fluid
+        value={datesRangeInputValue}
+      />
+    );
+  };
   render() {
     const {
-      onChange,
-      icon,
       popupPosition,
       inline,
       setDatesRange,
       setStartEndDatesRange,
-      datesRange: { start, end },
-      dateFormat,
     } = this.props;
-    const rest = getUnhandledProps(CustomDatesRangeInput, this.props);
-    const datesRangeInputValue = `${start ? start.format(dateFormat) : ''} - ${
-      end ? end.format(dateFormat) : ''
-    }`;
-    const inputElement = (
-      <Input
-        {...rest}
-        onChange={onChange}
-        icon={icon}
-        value={datesRangeInputValue}
-        fluid
-      />
-    );
+
     if (inline) {
       return this.getPicker();
     }
@@ -74,7 +132,7 @@ class CustomDatesRangeInput extends Component {
         {({ on, setOff, setOn }) => (
           <Popup
             position={popupPosition}
-            trigger={inputElement}
+            trigger={this._getInput()}
             popupState={on}
             handleClose={setOff}
             handleOpen={setOn}
@@ -94,8 +152,6 @@ CustomDatesRangeInput.propTypes = {
    * @param {SyntheticEvent} event React's original SyntheticEvent.
    * @param {object} data All props and proposed value.
    */
-  onRangeChange: PropTypes.func,
-  onChange: PropTypes.func,
   /** Same as semantic-ui-react Input's ``icon`` prop. */
   icon: PropTypes.any,
   /** Date formatting string.
@@ -103,7 +159,6 @@ CustomDatesRangeInput.propTypes = {
    */
   dateFormat: PropTypes.string,
   /** Character that used to divide dates in string. */
-  divider: PropTypes.string,
   popupPosition: PropTypes.oneOf([
     'top left',
     'top right',
@@ -122,6 +177,11 @@ CustomDatesRangeInput.propTypes = {
   datesRange: PropTypes.object,
   setDatesRange: PropTypes.func,
   setStartEndDatesRange: PropTypes.func,
+  className: PropTypes.string,
+  iconPosition: PropTypes.string,
+  mode: PropTypes.string,
+  name: PropTypes.string,
+  placeholder: PropTypes.string,
 };
 
 CustomDatesRangeInput.defaultProps = {

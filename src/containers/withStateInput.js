@@ -2,7 +2,6 @@ import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import invoke from 'lodash/invoke';
-import isEmpty from 'lodash/isEmpty';
 
 import { monthIndex, cloneReplaceValue, emptyFunction, tick } from '../lib';
 import { DATE_INPUT, DATE_TIME_INPUT } from '../lib/COMPONENT_TYPES.js';
@@ -56,10 +55,7 @@ function withStateInput(WrappedComponent) {
       pickDatesRange: PropTypes.bool,
       divider: PropTypes.string,
       onRangeChange: PropTypes.func,
-      datesRange: PropTypes.shape({
-        start: PropTypes.instanceOf(moment),
-        end: PropTypes.instanceOf(moment),
-      }),
+      datesRange: PropTypes.object,
     };
 
     static defaultProps = {
@@ -281,7 +277,6 @@ function withStateInput(WrappedComponent) {
           newState = {
             datesRange: { start: datesRange.start, end: data.value },
           };
-          onRangeChange({ start: datesRange.start, end: data.value });
           onDatesRangeChange(
             event,
             cloneReplaceValue(
@@ -292,6 +287,7 @@ function withStateInput(WrappedComponent) {
               }),
             ),
           );
+          onRangeChange({ start: datesRange.start, end: data.value });
         } else {
           newState = {
             datesRange: { start: data.value, end: datesRange.end },
