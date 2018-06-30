@@ -1,5 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Input } from 'semantic-ui-react';
+
 import { dispatchDateChange } from '../lib/events.js';
 
 class CustomInput extends React.Component {
@@ -8,11 +10,13 @@ class CustomInput extends React.Component {
   }
 
   render() {
-    return <Input { ...this.props } />;
+    return <Input {...this.props} />;
   }
 }
 
-export default CustomInput;
-export {
-  CustomInput
+CustomInput.propTypes = {
+  value: PropTypes.any,
 };
+
+export default CustomInput;
+export { CustomInput };
