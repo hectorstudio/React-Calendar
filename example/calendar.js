@@ -34,7 +34,6 @@ class DateTimeForm extends React.Component {
     }
   };
   _onRangeChange = datesRange => {
-    console.log('datesRange', datesRange);
     this.setState({ customDateRanges: datesRange });
   };
   render() {
