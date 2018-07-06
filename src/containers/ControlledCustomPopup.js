@@ -26,50 +26,66 @@ class ControlledCustomPopup extends Component {
   data = [
     {
       content: 'Today',
-      start: moment(),
-      end: moment(),
+      start: moment().startOf('day'),
+      end: moment().endOf('day'),
     },
     {
       content: 'Yesterday',
-      start: moment().add(-1, 'days'),
-      end: moment(),
+      start: moment()
+        .add(-1, 'days')
+        .startOf('day'),
+      end: moment().endOf('day'),
     },
     {
       content: 'This Week',
-      start: moment().day(1),
-      end: moment().day(7),
+      start: moment()
+        .day(1)
+        .startOf('day'),
+      end: moment()
+        .day(7)
+        .endOf('day'),
     },
     {
       content: 'Last Week',
       start: moment()
         .subtract(1, 'weeks')
-        .day(1),
+        .day(1)
+        .startOf('day'),
       end: moment()
         .subtract(1, 'weeks')
-        .day(7),
+        .day(7)
+        .endOf('day'),
     },
     {
       content: 'Last 2 Weeks',
       start: moment()
         .subtract(2, 'weeks')
-        .day(1),
+        .day(1)
+        .startOf('day'),
       end: moment()
         .subtract(1, 'weeks')
-        .day(7),
+        .day(7)
+        .endOf('day'),
     },
     {
       content: 'This month',
-      start: moment().startOf('month'),
-      end: moment().endOf('month'),
+      start: moment()
+        .startOf('month')
+        .startOf('day'),
+      end: moment()
+        .endOf('month')
+        .endOf('day'),
     },
     {
       content: 'Last month',
       start: moment()
         .subtract(1, 'months')
-        .startOf('month'),
+        .startOf('month')
+        .startOf('day'),
       end: moment()
         .subtract(1, 'months')
-        .endOf('month'),
+        .endOf('month')
+        .endOf('day'),
     },
   ];
   _onButtonClick = (start, end) => event => {

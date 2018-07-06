@@ -21,13 +21,6 @@ class DateTimeForm extends React.Component {
     super(props);
 
     this.state = {
-      year: '',
-      month: '',
-      date: '',
-      dateStartYear: '',
-      time: '',
-      dateTime: '',
-      datesRange: '',
       customDateRanges: {
         start: moment(),
         end: moment(),
