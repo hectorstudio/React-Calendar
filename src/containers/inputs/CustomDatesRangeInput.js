@@ -6,7 +6,6 @@ import split from 'lodash/split';
 import trim from 'lodash/trim';
 import moment from 'moment';
 
-import { getUnhandledProps } from '../../lib';
 import { DATES_RANGE_INPUT } from '../../lib/COMPONENT_TYPES';
 import { DatesRangePickerContent } from '../../components/pickerContent/DatesRangePickerContent.js';
 import {
@@ -15,7 +14,7 @@ import {
   withStateInput,
 } from '../';
 
-const validateDate = (date, dateFormat) => {
+const validateDatesRange = (date, dateFormat) => {
   const splitData = split(date, '-');
   if (splitData.length == 2) {
     const start = moment(trim(splitData[0]), dateFormat, true);
@@ -58,7 +57,6 @@ class CustomDatesRangeInput extends Component {
     }
   };
   getPicker() {
-    const rest = getUnhandledProps(CustomDatesRangeInput, this.props);
     const {
       handleHeaderDateClick,
       showNextMonth,
@@ -67,7 +65,6 @@ class CustomDatesRangeInput extends Component {
       datesRange,
       setDatesRange,
     } = this.props;
-    delete rest.onDatesRangeChange;
     return (
       <Table unstackable celled textAlign="center">
         <DatesRangePickerContent
@@ -84,7 +81,7 @@ class CustomDatesRangeInput extends Component {
   _onChange = e => {
     const value = e.target.value;
     const { dateFormat, setStartEndDatesRange } = this.props;
-    const date = validateDate(value, dateFormat);
+    const date = validateDatesRange(value, dateFormat);
     if (date) {
       setStartEndDatesRange(null, date);
     }

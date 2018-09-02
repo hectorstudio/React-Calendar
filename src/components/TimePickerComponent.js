@@ -1,7 +1,8 @@
 import React from 'react';
-import { HourPicker, MinutePicker, PickerHeader } from '.';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+
+import { HourPicker, MinutePicker, PickerHeader } from '.';
 
 function TimePickerComponent(props) {
   const {
@@ -12,40 +13,41 @@ function TimePickerComponent(props) {
     onMinuteClick,
     activeHour,
     activeMinute,
-    mode
+    mode,
   } = props;
 
   if (mode === 'minute') {
     return (
       <React.Fragment>
-        { selectedDate && (
+        {selectedDate && (
           <PickerHeader
             width="3"
             includeDay
             activeDate={selectedDate}
             onNextBtnClick={onNextDayBtnClick}
-            onPrevBtnClick={onPrevDayBtnClick} />
-        ) }
+            onPrevBtnClick={onPrevDayBtnClick}
+          />
+        )}
         <MinutePicker
           hour={activeHour}
           activeMinute={activeMinute}
-          onMinuteClick={onMinuteClick} />
+          onMinuteClick={onMinuteClick}
+        />
       </React.Fragment>
     );
   } else {
     return (
       <React.Fragment>
-        { selectedDate && (
+        {selectedDate && (
           <PickerHeader
             width="4"
             includeDay
             activeDate={selectedDate}
             onNextBtnClick={onNextDayBtnClick}
-            onPrevBtnClick={onPrevDayBtnClick} />
-        ) }
-        <HourPicker
-          activeHour={activeHour}
-          onHourClick={onHourClick} />
+            onPrevBtnClick={onPrevDayBtnClick}
+          />
+        )}
+        <HourPicker activeHour={activeHour} onHourClick={onHourClick} />
       </React.Fragment>
     );
   }
@@ -62,14 +64,12 @@ TimePickerComponent.propTypes = {
   activeMinute: PropTypes.string,
   onNextDayBtnClick: PropTypes.func,
   onPrevDayBtnClick: PropTypes.func,
-  mode: PropTypes.string
+  mode: PropTypes.string,
 };
 
 TimePickerComponent.defaultProps = {
-  mode: 'hour'
+  mode: 'hour',
 };
 
 export default TimePickerComponent;
-export {
-  TimePickerComponent
-};
+export { TimePickerComponent };
