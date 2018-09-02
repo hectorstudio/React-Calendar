@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { PickerHeader, TimePickerComponent } from '../';
+
 import { DatePickerContent } from './DatePickerContent.js';
 
 function DateTimePickerContent(props) {
@@ -24,9 +26,10 @@ function DateTimePickerContent(props) {
     onMinuteClick,
     yearsRange,
     onPrevBtnClick,
-    onNextBtnClick
+    onNextBtnClick,
   } = props;
-  const headerWidth = mode === 'minute'? '3' : mode === 'hour'? '4' : '7';
+
+  const headerWidth = mode === 'minute' ? '3' : mode === 'hour' ? '4' : '7';
   if (mode !== 'hour' && mode !== 'minute') {
     return (
       <DatePickerContent
@@ -43,7 +46,8 @@ function DateTimePickerContent(props) {
         activeDate={activeDate}
         yearsRange={yearsRange}
         onPrevBtnClick={onPrevBtnClick}
-        onNextBtnClick={onNextBtnClick} />
+        onNextBtnClick={onNextBtnClick}
+      />
     );
   }
   return (
@@ -54,18 +58,18 @@ function DateTimePickerContent(props) {
         onPrevBtnClick={showPrevDay}
         activeDate={activeDate}
         includeDay
-        width={headerWidth} />
+        width={headerWidth}
+      />
       <TimePickerComponent
         mode={mode}
         activeHour={activeHour}
         activeMinute={activeMinute}
         onHourClick={onHourClick}
-        onMinuteClick={onMinuteClick} />
+        onMinuteClick={onMinuteClick}
+      />
     </React.Fragment>
   );
 }
 
 export default DateTimePickerContent;
-export {
-  DateTimePickerContent
-};
+export { DateTimePickerContent };

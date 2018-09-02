@@ -48,14 +48,17 @@ function withStateInput(WrappedComponent) {
       onTimeChange: PropTypes.func,
       onDatesRangeChange: PropTypes.func,
       startMode: PropTypes.oneOf(['year', 'month', 'day']),
-      value: PropTypes.string,
+      value: PropTypes.any,
       dateFormat: PropTypes.string,
       pickDate: PropTypes.bool,
       pickDateTime: PropTypes.bool,
       pickDatesRange: PropTypes.bool,
       divider: PropTypes.string,
       onRangeChange: PropTypes.func,
+      onChange: PropTypes.func,
       datesRange: PropTypes.object,
+      onDateTimeChange: PropTypes.func,
+      dateTimeValue: PropTypes.object,
     };
 
     static defaultProps = {
@@ -145,20 +148,18 @@ function withStateInput(WrappedComponent) {
 
     onDateChange = (event, data) => {
       if (WrappedComponent.META.type === DATE_INPUT) {
-        let newValue = data.value;
-        if (data.value.format) {
-          newValue = data.value.format(this.props.dateFormat);
-        }
-        invoke(this.props, 'onChange', event, {
-          ...this.props,
-          value: newValue,
-        });
+        const { onChange } = this.props;
+        onChange(data.value);
       } else if (WrappedComponent.META.type === DATE_TIME_INPUT) {
-        const newValue = data.value.format(this.props.dateFormat);
-        invoke(this.props, 'onChange', event, {
-          ...this.props,
-          value: newValue,
-        });
+        ///////////////////////////////////
+        const { onDateTimeChange, dateTimeValue } = this.props;
+        const selectedMoment = data.value;
+        const nextDateTime = moment(dateTimeValue);
+        nextDateTime.year(selectedMoment.year());
+        nextDateTime.month(selectedMoment.month());
+        nextDateTime.date(selectedMoment.date());
+        onDateTimeChange(nextDateTime);
+        ///////////////////////////////////
       }
     };
 
@@ -175,14 +176,15 @@ function withStateInput(WrappedComponent) {
       }
     };
 
-    onDatesRangeChange = (event, data) => {
-      invoke(this.props, 'onChange', event, {
-        ...this.props,
-        value: data.value,
-      });
-    };
-
     onHourClick = (event, data) => {
+      ///////////////////////////////////
+      const { onDateTimeChange, dateTimeValue } = this.props;
+      const { hour } = data;
+      const nextDateTime = moment(dateTimeValue);
+      nextDateTime.hour(hour);
+      onDateTimeChange(nextDateTime);
+      ///////////////////////////////////
+
       tick(() => {
         this.setState(() => ({
           activeHour: data.value,
@@ -190,8 +192,16 @@ function withStateInput(WrappedComponent) {
         this.switchToNextMode('minute');
       });
     };
-
     onMinuteClick = (event, data) => {
+      ///////////////////////////////////
+      const { onDateTimeChange, dateTimeValue } = this.props;
+
+      const { minute } = data;
+      const nextDateTime = moment(dateTimeValue);
+      nextDateTime.minute(minute);
+      onDateTimeChange(nextDateTime);
+      ///////////////////////////////////
+
       this.setState(prevState => {
         const newData = cloneReplaceValue(
           data,
@@ -206,8 +216,21 @@ function withStateInput(WrappedComponent) {
         };
       });
     };
+    onDatesRangeChange = (event, data) => {
+      invoke(this.props, 'onChange', event, {
+        ...this.props,
+        value: data.value,
+      });
+    };
 
     onYearChange = (event, data) => {
+      ///////////////////////////////////
+      const { onDateTimeChange, dateTimeValue } = this.props;
+      const nextDateTime = moment(dateTimeValue);
+      nextDateTime.year(data.value);
+      onDateTimeChange(nextDateTime);
+      ///////////////////////////////////
+
       const date = {
         year: data.value,
       };
@@ -219,6 +242,13 @@ function withStateInput(WrappedComponent) {
     };
 
     onMonthChange = (event, data) => {
+      ///////////////////////////////////
+      const { onDateTimeChange, dateTimeValue } = this.props;
+      const nextDateTime = moment(dateTimeValue);
+      nextDateTime.month(monthIndex(data.value));
+      onDateTimeChange(nextDateTime);
+      ///////////////////////////////////
+
       const date = {
         year: this.state.year,
         month: monthIndex(data.value),

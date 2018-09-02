@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Form } from 'semantic-ui-react';
 import moment from 'moment';
 
-import { CustomDatesRangeInput } from '../src';
+import { CustomDatesRangeInput, DateInput, DateTimeInput } from '../src';
 
 moment.locale('en');
 
@@ -25,6 +25,8 @@ class DateTimeForm extends React.Component {
         start: moment(),
         end: moment(),
       },
+      date: moment(),
+      dateTime: moment(),
     };
   }
 
@@ -36,7 +38,15 @@ class DateTimeForm extends React.Component {
   _onRangeChange = datesRange => {
     this.setState({ customDateRanges: datesRange });
   };
+  _onDateChange = date => {
+    this.setState({ date });
+  };
+  _onDateTimeChange = dateTime => {
+    this.setState({ dateTime });
+  };
   render() {
+    const { customDateRanges, date, dateTime } = this.state;
+
     return (
       <Form>
         <br />
@@ -47,8 +57,26 @@ class DateTimeForm extends React.Component {
           className="example-calendar-input"
           name="datesRange"
           iconPosition="left"
-          datesRange={this.state.customDateRanges}
+          datesRange={customDateRanges}
           onRangeChange={this._onRangeChange}
+        />
+        <DateInput
+          dateFormat="DD/MM/YYYY"
+          placeholder="From"
+          className="example-calendar-input"
+          name="dateInput"
+          iconPosition="left"
+          value={date}
+          onChange={this._onDateChange}
+        />
+        <DateTimeInput
+          dateTimeFormat="DD/MM/YYYY hh:mm:ss A"
+          placeholder="From"
+          className="example-calendar-input"
+          name="dateTimeInput"
+          iconPosition="left"
+          dateTimeValue={dateTime}
+          onDateTimeChange={this._onDateTimeChange}
         />
       </Form>
     );

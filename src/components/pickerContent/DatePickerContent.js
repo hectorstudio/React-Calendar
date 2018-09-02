@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { MonthMode } from '../pickerModes/MonthMode.js';
 import { DayMode } from '../pickerModes/DayMode.js';
 import { YearMode } from '../pickerModes/YearMode.js';
@@ -18,10 +20,11 @@ function DatePickerContent(props) {
     activeDate,
     yearsRange,
     onPrevBtnClick,
-    onNextBtnClick
+    onNextBtnClick,
   } = props;
   if (mode === 'year') {
-    const value = activeDate && activeDate.isValid()? activeDate.format('YYYY') : '';
+    const value =
+      activeDate && activeDate.isValid() ? activeDate.format('YYYY') : '';
     return (
       <YearMode
         onHeaderDateClick={handleHeaderDateClick}
@@ -29,7 +32,8 @@ function DatePickerContent(props) {
         onPrevBtnClick={onPrevBtnClick}
         onNextBtnClick={onNextBtnClick}
         onYearClick={onYearChange}
-        value={value} />
+        value={value}
+      />
     );
   }
   if (mode === 'month') {
@@ -39,7 +43,8 @@ function DatePickerContent(props) {
         showNextYear={showNextYear}
         showPrevYear={showPrevYear}
         dateToShow={dateToShow}
-        onMonthChange={onMonthChange} />
+        onMonthChange={onMonthChange}
+      />
     );
   }
   return (
@@ -49,11 +54,26 @@ function DatePickerContent(props) {
       showPrevMonth={showPrevMonth}
       dateToShow={dateToShow}
       onDateClick={onDateClick}
-      activeDate={activeDate} />
+      activeDate={activeDate}
+    />
   );
 }
 
-export default DatePickerContent;
-export {
-  DatePickerContent
+DatePickerContent.propTypes = {
+  mode: PropTypes.string,
+  handleHeaderDateClick: PropTypes.func,
+  onYearChange: PropTypes.func,
+  showNextYear: PropTypes.func,
+  showPrevYear: PropTypes.func,
+  dateToShow: PropTypes.object,
+  onMonthChange: PropTypes.func,
+  showNextMonth: PropTypes.func,
+  showPrevMonth: PropTypes.func,
+  onDateClick: PropTypes.func,
+  activeDate: PropTypes.object,
+  yearsRange: PropTypes.object,
+  onPrevBtnClick: PropTypes.func,
+  onNextBtnClick: PropTypes.func,
 };
+export default DatePickerContent;
+export { DatePickerContent };
