@@ -44,6 +44,9 @@ class DateTimeForm extends React.Component {
   _onDateTimeChange = dateTime => {
     this.setState({ dateTime });
   };
+  _onValidateError = () => {
+    console.log('error');
+  };
   render() {
     const { customDateRanges, date, dateTime } = this.state;
 
@@ -52,7 +55,8 @@ class DateTimeForm extends React.Component {
         <br />
         <div>CUSTOM</div>
         <CustomDatesRangeInput
-          dateFormat="DD/MM/YYYY"
+          dateFormat="DD-MM-YYYY"
+          onValidateError={this._onValidateError}
           placeholder="From - To"
           className="example-calendar-input"
           name="datesRange"
@@ -61,7 +65,7 @@ class DateTimeForm extends React.Component {
           onRangeChange={this._onRangeChange}
         />
         <DateInput
-          dateFormat="DD/MM/YYYY"
+          dateFormat="DD-MM-YYYY"
           placeholder="From"
           className="example-calendar-input"
           name="dateInput"
@@ -70,7 +74,7 @@ class DateTimeForm extends React.Component {
           onChange={this._onDateChange}
         />
         <DateTimeInput
-          dateTimeFormat="DD/MM/YYYY hh:mm:ss A"
+          dateTimeFormat="DD-MM-YYYY hh:mm:ss A"
           placeholder="From"
           className="example-calendar-input"
           name="dateTimeInput"

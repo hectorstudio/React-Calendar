@@ -14,13 +14,17 @@ import {
   withStateInput,
 } from '../';
 
-const validateDatesRange = (date, dateFormat) => {
-  const splitData = split(date, '-');
+const validateDatesRange = (date, dateFormat, onValidateError, onValidated) => {
+  const splitData = split(date, ' - ');
   if (splitData.length == 2) {
     const start = moment(trim(splitData[0]), dateFormat, true);
     const end = moment(trim(splitData[1]), dateFormat, true);
-    if (start.isValid() && end.isValid()) return { start, end };
+    if (start.isValid() && end.isValid()) {
+      onValidated();
+      return { start, end };
+    }
   }
+  onValidateError();
 };
 
 class CustomDatesRangeInput extends Component {
@@ -28,9 +32,6 @@ class CustomDatesRangeInput extends Component {
     type: DATES_RANGE_INPUT,
     name: 'CustomDatesRangeInput',
   };
-  // state = {
-  //   datesRangeInputValue: '',
-  // };
   constructor(props) {
     super(props);
     const { datesRange } = props;
@@ -80,8 +81,18 @@ class CustomDatesRangeInput extends Component {
   }
   _onChange = e => {
     const value = e.target.value;
-    const { dateFormat, setStartEndDatesRange } = this.props;
-    const date = validateDatesRange(value, dateFormat);
+    const {
+      dateFormat,
+      setStartEndDatesRange,
+      onValidateError,
+      onValidated,
+    } = this.props;
+    const date = validateDatesRange(
+      value,
+      dateFormat,
+      onValidateError,
+      onValidated,
+    );
     if (date) {
       setStartEndDatesRange(null, date);
     }
@@ -154,6 +165,8 @@ CustomDatesRangeInput.propTypes = {
   /** Date formatting string.
    * Anything that that can be passed to ``moment().format``.
    */
+  onValidateError: PropTypes.func,
+  onValidated: PropTypes.func,
   dateFormat: PropTypes.string,
   /** Character that used to divide dates in string. */
   popupPosition: PropTypes.oneOf([
