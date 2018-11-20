@@ -1,5 +1,5 @@
-import React from 'react';
-import { Table } from 'semantic-ui-react';
+import React, { Fragment, Component } from 'react';
+import { Table, Button, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import map from 'lodash/map';
@@ -13,17 +13,15 @@ import {
 
 import DatePickerCell from './DatePickerCell.js';
 
-function DatePickerComponent(props) {
-  const {
-    setDatesRange,
-    activeDate,
-    showedMonth,
-    datesRange,
-    onDateClick,
-  } = props;
-  const rest = getUnhandledProps(DatePickerComponent, props);
-  const data = getArrayOfWeeks(showedMonth);
-  const _getRow = (week, key) => {
+class DatePickerComponent extends Component {
+  _getRow = (week, key) => {
+    const {
+      setDatesRange,
+      activeDate,
+      showedMonth,
+      datesRange,
+      onDateClick,
+    } = this.props;
     const days = map(week, day => {
       const active = isActiveDate(day, activeDate || datesRange);
       const disabled = !isDayInMonth(day, showedMonth);
@@ -39,12 +37,41 @@ function DatePickerComponent(props) {
     });
     return <Table.Row key={key}>{days}</Table.Row>;
   };
-
-  const _getTableContent = weeks => {
-    return map(weeks, week => _getRow(week, week[0].format('YYYY-MM-DD')));
+  _onButtonClick = event => {
+    event.preventDefault();
+    event.stopPropagation();
+    const { switchMode } = this.props;
+    setTimeout(() => {
+      switchMode('hour');
+    }, 0);
   };
-
-  return <Table.Body {...rest}>{_getTableContent(data)}</Table.Body>;
+  _getTableContent = weeks => {
+    return map(weeks, week => this._getRow(week, week[0].format('YYYY-MM-DD')));
+  };
+  render() {
+    const { showedMonth, shouldShowTimeButton } = this.props;
+    const rest = getUnhandledProps(DatePickerComponent, this.props);
+    const data = getArrayOfWeeks(showedMonth);
+    return (
+      <Fragment>
+        <Table.Body {...rest}>{this._getTableContent(data)}</Table.Body>
+        <Table.Footer>
+          {shouldShowTimeButton && (
+            <Table.Row>
+              <Table.Cell
+                colSpan="7"
+                style={{ cursor: 'pointer' }}
+                onClick={this._onButtonClick}
+                className="suir-calendar date"
+              >
+                <Icon name="clock" />Time
+              </Table.Cell>
+            </Table.Row>
+          )}
+        </Table.Footer>
+      </Fragment>
+    );
+  }
 }
 
 DatePickerComponent.propTypes = {
@@ -57,7 +84,12 @@ DatePickerComponent.propTypes = {
   activeDate: PropTypes.instanceOf(moment),
   /** Dates range */
   datesRange: PropTypes.object,
+  switchMode: PropTypes.func,
+  shouldShowTimeButton: PropTypes.bool,
 };
 
+DatePickerComponent.defaultProps = {
+  shouldShowTimeButton: false,
+};
 export default DatePickerComponent;
 export { DatePickerComponent };

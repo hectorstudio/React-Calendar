@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Table } from 'semantic-ui-react';
+import { Table, Icon } from 'semantic-ui-react';
 import map from 'lodash/map';
 import forEach from 'lodash/forEach';
 
 import { getUnhandledProps } from '../lib';
+
+import HourPickerCell from './HourPickerCell';
 
 const HOURS = [
   '00',
@@ -33,31 +35,8 @@ const HOURS = [
   '23',
 ];
 
-function HourPickerCell(props) {
-  const { onClick, hour } = props;
-  const rest = getUnhandledProps(HourPickerCell, props);
-
-  const onHourClick = event => {
-    event.stopPropagation();
-    onClick(event, { ...props, value: hour });
-  };
-  return (
-    <Table.Cell
-      {...rest}
-      onClick={onHourClick}
-      className="suir-calendar time"
-      textAlign="center"
-    >
-      {hour + ':00'}
-    </Table.Cell>
-  );
-}
-
-function HourPicker(props) {
-  const { onHourClick, activeHour } = props;
-  const rest = getUnhandledProps(HourPicker, props);
-
-  const getRows = hours => {
+class HourPicker extends Component {
+  _getRows = hours => {
     const rows = [];
     let rowIndex = 0;
     forEach(hours, (hour, i) => {
@@ -71,30 +50,55 @@ function HourPicker(props) {
     });
     return rows;
   };
-  const hours = map(HOURS, hour => (
-    <HourPickerCell
-      onClick={onHourClick}
-      active={hour === activeHour}
-      hour={hour}
-      key={hour}
-    />
-  ));
-  const rows = map(getRows(hours), (row, i) => (
-    <Table.Row key={i}>{row}</Table.Row>
-  ));
-  return <Table.Body {...rest}>{rows}</Table.Body>;
-}
+  _onButtonClick = event => {
+    event.preventDefault();
+    event.stopPropagation();
+    const { switchMode } = this.props;
+    setTimeout(() => {
+      switchMode('day');
+    }, 1);
+  };
+  render() {
+    const { onHourClick, activeHour, shouldShowDayButton } = this.props;
+    const rest = getUnhandledProps(HourPicker, this.props);
 
-HourPickerCell.propTypes = {
-  /** (event, data) => {} */
-  onClick: PropTypes.func.isRequired,
-  hour: PropTypes.string.isRequired,
-};
+    const hours = map(HOURS, hour => (
+      <HourPickerCell
+        onClick={onHourClick}
+        active={hour === activeHour}
+        hour={hour}
+        key={hour}
+      />
+    ));
+    const rows = map(this._getRows(hours), (row, i) => (
+      <Table.Row key={i}>{row}</Table.Row>
+    ));
+    return (
+      <Table.Body {...rest}>
+        {rows}
+        {shouldShowDayButton && (
+          <Table.Row>
+            <Table.Cell
+              colSpan="7"
+              style={{ cursor: 'pointer' }}
+              onClick={this._onButtonClick}
+              className="suir-calendar date"
+            >
+              <Icon name="calendar" />Day
+            </Table.Cell>
+          </Table.Row>
+        )}
+      </Table.Body>
+    );
+  }
+}
 
 HourPicker.propTypes = {
   /** (event, data) => {} */
   onHourClick: PropTypes.func.isRequired,
   activeHour: PropTypes.string,
+  shouldShowDayButton: PropTypes.bool,
+  switchMode: PropTypes.func,
 };
 
 export default HourPicker;

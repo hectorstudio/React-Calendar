@@ -4,18 +4,18 @@ import moment from 'moment';
 
 import { HourPicker, MinutePicker, PickerHeader } from '.';
 
-function TimePickerComponent(props) {
-  const {
-    selectedDate,
-    onNextDayBtnClick,
-    onPrevDayBtnClick,
-    onHourClick,
-    onMinuteClick,
-    activeHour,
-    activeMinute,
-    mode,
-  } = props;
-
+const TimePickerComponent = ({
+  selectedDate,
+  onNextDayBtnClick,
+  onPrevDayBtnClick,
+  onHourClick,
+  onMinuteClick,
+  activeHour,
+  activeMinute,
+  mode,
+  shouldShowDayButton,
+  switchMode,
+}) => {
   if (mode === 'minute') {
     return (
       <React.Fragment>
@@ -32,6 +32,8 @@ function TimePickerComponent(props) {
           hour={activeHour}
           activeMinute={activeMinute}
           onMinuteClick={onMinuteClick}
+          shouldShowDayButton={shouldShowDayButton}
+          switchMode={switchMode}
         />
       </React.Fragment>
     );
@@ -47,11 +49,16 @@ function TimePickerComponent(props) {
             onPrevBtnClick={onPrevDayBtnClick}
           />
         )}
-        <HourPicker activeHour={activeHour} onHourClick={onHourClick} />
+        <HourPicker
+          activeHour={activeHour}
+          onHourClick={onHourClick}
+          shouldShowDayButton={shouldShowDayButton}
+          switchMode={switchMode}
+        />
       </React.Fragment>
     );
   }
-}
+};
 
 TimePickerComponent.propTypes = {
   /** (event, data) => {} */
@@ -64,6 +71,7 @@ TimePickerComponent.propTypes = {
   activeMinute: PropTypes.string,
   onNextDayBtnClick: PropTypes.func,
   onPrevDayBtnClick: PropTypes.func,
+  switchMode: PropTypes.func,
   mode: PropTypes.string,
 };
 

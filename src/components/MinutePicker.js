@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Table } from 'semantic-ui-react';
+import { Table, Icon } from 'semantic-ui-react';
 import map from 'lodash/map';
 import forEach from 'lodash/forEach';
 
 import { getUnhandledProps } from '../lib';
+
+import MinutePickerCell from './MinutePickerCell';
 
 const MINUTES = [
   '00',
@@ -21,36 +23,8 @@ const MINUTES = [
   '55',
 ];
 
-function MinutePickerCell(props) {
-  const { onClick, hour, minute } = props;
-  const rest = getUnhandledProps(MinutePickerCell, props);
-
-  const onMinuteClick = event => {
-    event.stopPropagation();
-    onClick(event, { ...props, value: minute });
-  };
-
-  return (
-    <Table.Cell
-      {...rest}
-      onClick={onMinuteClick}
-      className="suir-calendar time"
-      textAlign="center"
-    >
-      {hour + ':' + minute}
-    </Table.Cell>
-  );
-}
-
-function MinutePicker(props) {
-  const { onMinuteClick, hour, activeMinute } = props;
-  const rest = getUnhandledProps(MinutePicker, props);
-
-  const cellStyle = {
-    width: '33.33333%',
-    minWidth: '8em',
-  };
-  const getRows = minutes => {
+class MinutePicker extends Component {
+  _getRows = minutes => {
     const rows = [];
     let rowIndex = 0;
     forEach(minutes, (min, i) => {
@@ -65,29 +39,59 @@ function MinutePicker(props) {
 
     return rows;
   };
-  const minutes = map(MINUTES, minute => (
-    <MinutePickerCell
-      style={cellStyle}
-      onClick={onMinuteClick}
-      active={minute === activeMinute}
-      hour={hour}
-      minute={minute}
-      key={minute}
-    />
-  ));
-  const rows = map(getRows(minutes), (row, i) => (
-    <Table.Row key={i}>{row}</Table.Row>
-  ));
+  _onButtonClick = event => {
+    event.preventDefault();
+    event.stopPropagation();
+    const { switchMode } = this.props;
+    setTimeout(() => {
+      switchMode('day');
+    }, 1);
+  };
+  render() {
+    const {
+      onMinuteClick,
+      hour,
+      activeMinute,
+      shouldShowDayButton,
+    } = this.props;
+    const rest = getUnhandledProps(MinutePicker, this.props);
+    const cellStyle = {
+      width: '33.33333%',
+      minWidth: '8em',
+    };
+    const minutes = map(MINUTES, minute => (
+      <MinutePickerCell
+        style={cellStyle}
+        onClick={onMinuteClick}
+        active={minute === activeMinute}
+        hour={hour}
+        minute={minute}
+        key={minute}
+      />
+    ));
+    const rows = map(this._getRows(minutes), (row, i) => (
+      <Table.Row key={i}>{row}</Table.Row>
+    ));
 
-  return <Table.Body {...rest}>{rows}</Table.Body>;
+    return (
+      <Table.Body {...rest}>
+        {rows}
+        {shouldShowDayButton && (
+          <Table.Row>
+            <Table.Cell
+              colSpan="7"
+              style={{ cursor: 'pointer' }}
+              onClick={this._onButtonClick}
+              className="suir-calendar date"
+            >
+              <Icon name="calendar" />Day
+            </Table.Cell>
+          </Table.Row>
+        )}
+      </Table.Body>
+    );
+  }
 }
-
-MinutePickerCell.propTypes = {
-  /** (event, data) => {} */
-  onClick: PropTypes.func.isRequired,
-  hour: PropTypes.string.isRequired,
-  minute: PropTypes.string.isRequired,
-};
 
 MinutePicker.propTypes = {
   /** (event, data) => {} */
@@ -95,6 +99,8 @@ MinutePicker.propTypes = {
   /** 'hh' */
   hour: PropTypes.string.isRequired,
   activeMinute: PropTypes.string,
+  shouldShowDayButton: PropTypes.bool,
+  switchMode: PropTypes.func,
 };
 
 export default MinutePicker;

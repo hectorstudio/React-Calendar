@@ -359,6 +359,10 @@ function withStateInput(WrappedComponent) {
       this.setState({ mode: getPrevMode(this.state.mode, lastMode) });
     };
 
+    switchMode = mode => {
+      this.setState({ mode });
+    };
+
     switchToNextMode = (lastMode = 'day') => {
       this.setState({ mode: getNextMode(this.state.mode, lastMode) });
     };
@@ -451,6 +455,7 @@ function withStateInput(WrappedComponent) {
           setStartEndDatesRange={this.setStartEndDatesRange}
           switchToPrevMode={this.switchToPrevMode}
           switchToNextMode={this.switchToNextMode}
+          switchMode={this.switchMode}
           showNextYear={this.showNextYear}
           showPrevYear={this.showPrevYear}
           showNextMonth={this.showNextMonth}
