@@ -45,7 +45,7 @@ class MinutePicker extends Component {
     const { switchMode } = this.props;
     setTimeout(() => {
       switchMode('day');
-    }, 1);
+    }, 0);
   };
   render() {
     const {

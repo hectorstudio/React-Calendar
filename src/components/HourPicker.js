@@ -56,7 +56,7 @@ class HourPicker extends Component {
     const { switchMode } = this.props;
     setTimeout(() => {
       switchMode('day');
-    }, 1);
+    }, 0);
   };
   render() {
     const { onHourClick, activeHour, shouldShowDayButton } = this.props;

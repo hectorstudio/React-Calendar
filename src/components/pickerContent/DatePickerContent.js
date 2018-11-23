@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { MonthMode } from '../pickerModes/MonthMode.js';
@@ -49,18 +49,16 @@ const DatePickerContent = ({
     );
   }
   return (
-    <Fragment>
-      <DayMode
-        handleHeaderDateClick={handleHeaderDateClick}
-        showNextMonth={showNextMonth}
-        showPrevMonth={showPrevMonth}
-        dateToShow={dateToShow}
-        onDateClick={onDateClick}
-        activeDate={activeDate}
-        switchMode={switchMode}
-        shouldShowTimeButton={shouldShowTimeButton}
-      />
-    </Fragment>
+    <DayMode
+      handleHeaderDateClick={handleHeaderDateClick}
+      showNextMonth={showNextMonth}
+      showPrevMonth={showPrevMonth}
+      dateToShow={dateToShow}
+      onDateClick={onDateClick}
+      activeDate={activeDate}
+      switchMode={switchMode}
+      shouldShowTimeButton={shouldShowTimeButton}
+    />
   );
 };
 
