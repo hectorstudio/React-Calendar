@@ -5,23 +5,24 @@ import { MonthMode } from '../pickerModes/MonthMode.js';
 import { DayMode } from '../pickerModes/DayMode.js';
 import { YearMode } from '../pickerModes/YearMode.js';
 
-function DatePickerContent(props) {
-  const {
-    mode,
-    handleHeaderDateClick,
-    onYearChange,
-    showNextYear,
-    showPrevYear,
-    dateToShow,
-    onMonthChange,
-    showNextMonth,
-    showPrevMonth,
-    onDateClick,
-    activeDate,
-    yearsRange,
-    onPrevBtnClick,
-    onNextBtnClick,
-  } = props;
+const DatePickerContent = ({
+  mode,
+  handleHeaderDateClick,
+  onYearChange,
+  showNextYear,
+  showPrevYear,
+  dateToShow,
+  onMonthChange,
+  showNextMonth,
+  showPrevMonth,
+  onDateClick,
+  activeDate,
+  yearsRange,
+  onPrevBtnClick,
+  onNextBtnClick,
+  switchMode,
+  shouldShowTimeButton,
+}) => {
   if (mode === 'year') {
     const value =
       activeDate && activeDate.isValid() ? activeDate.format('YYYY') : '';
@@ -55,9 +56,11 @@ function DatePickerContent(props) {
       dateToShow={dateToShow}
       onDateClick={onDateClick}
       activeDate={activeDate}
+      switchMode={switchMode}
+      shouldShowTimeButton={shouldShowTimeButton}
     />
   );
-}
+};
 
 DatePickerContent.propTypes = {
   mode: PropTypes.string,
@@ -74,6 +77,8 @@ DatePickerContent.propTypes = {
   yearsRange: PropTypes.object,
   onPrevBtnClick: PropTypes.func,
   onNextBtnClick: PropTypes.func,
+  shouldShowTimeButton: PropTypes.bool,
+  switchMode: PropTypes.func,
 };
 export default DatePickerContent;
 export { DatePickerContent };

@@ -1,34 +1,36 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { PickerHeader, TimePickerComponent } from '../';
 
 import { DatePickerContent } from './DatePickerContent.js';
 
-function DateTimePickerContent(props) {
-  const {
-    activeDate,
-    activeHour,
-    activeMinute,
-    mode,
-    handleHeaderDateClick,
-    handleHeaderTimeClick,
-    onYearChange,
-    showNextMonth,
-    showPrevMonth,
-    showNextYear,
-    showPrevYear,
-    showNextDay,
-    showPrevDay,
-    dateToShow,
-    onMonthChange,
-    onDateClick,
-    onHourClick,
-    onMinuteClick,
-    yearsRange,
-    onPrevBtnClick,
-    onNextBtnClick,
-  } = props;
-
+const DateTimePickerContent = ({
+  activeDate,
+  activeHour,
+  activeMinute,
+  mode,
+  handleHeaderDateClick,
+  handleHeaderTimeClick,
+  onYearChange,
+  showNextMonth,
+  showPrevMonth,
+  showNextYear,
+  showPrevYear,
+  showNextDay,
+  showPrevDay,
+  dateToShow,
+  onMonthChange,
+  onDateClick,
+  onHourClick,
+  onMinuteClick,
+  yearsRange,
+  onPrevBtnClick,
+  onNextBtnClick,
+  switchMode,
+  shouldShowTimeButton,
+  shouldShowDayButton,
+}) => {
   const headerWidth = mode === 'minute' ? '3' : mode === 'hour' ? '4' : '7';
   if (mode !== 'hour' && mode !== 'minute') {
     return (
@@ -47,6 +49,8 @@ function DateTimePickerContent(props) {
         yearsRange={yearsRange}
         onPrevBtnClick={onPrevBtnClick}
         onNextBtnClick={onNextBtnClick}
+        switchMode={switchMode}
+        shouldShowTimeButton={shouldShowTimeButton}
       />
     );
   }
@@ -66,10 +70,38 @@ function DateTimePickerContent(props) {
         activeMinute={activeMinute}
         onHourClick={onHourClick}
         onMinuteClick={onMinuteClick}
+        switchMode={switchMode}
+        shouldShowDayButton={shouldShowDayButton}
       />
     </React.Fragment>
   );
-}
+};
 
+DateTimePickerContent.propTypes = {
+  activeDate: PropTypes.object,
+  activeHour: PropTypes.string,
+  activeMinute: PropTypes.string,
+  mode: PropTypes.string,
+  dateToShow: PropTypes.object,
+  handleHeaderDateClick: PropTypes.func,
+  handleHeaderTimeClick: PropTypes.func,
+  onYearChange: PropTypes.func,
+  showNextMonth: PropTypes.func,
+  showNextYear: PropTypes.func,
+  showPrevMonth: PropTypes.func,
+  showPrevYear: PropTypes.func,
+  showNextDay: PropTypes.func,
+  showPrevDay: PropTypes.func,
+  onMonthChange: PropTypes.func,
+  onDateClick: PropTypes.func,
+  onHourClick: PropTypes.func,
+  onMinuteClick: PropTypes.func,
+  yearsRange: PropTypes.object,
+  onPrevBtnClick: PropTypes.func,
+  onNextBtnClick: PropTypes.func,
+  switchMode: PropTypes.func,
+  shouldShowDayButton: PropTypes.bool,
+  shouldShowTimeButton: PropTypes.bool,
+};
 export default DateTimePickerContent;
 export { DateTimePickerContent };

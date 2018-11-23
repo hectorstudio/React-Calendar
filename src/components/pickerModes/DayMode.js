@@ -3,15 +3,16 @@ import PropTypes from 'prop-types';
 
 import { PickerHeader, DatePickerComponent } from '../';
 
-function DayMode(props) {
-  const {
-    handleHeaderDateClick,
-    showNextMonth,
-    showPrevMonth,
-    dateToShow,
-    onDateClick,
-    activeDate,
-  } = props;
+const DayMode = ({
+  handleHeaderDateClick,
+  showNextMonth,
+  showPrevMonth,
+  dateToShow,
+  onDateClick,
+  activeDate,
+  switchMode,
+  shouldShowTimeButton,
+}) => {
   return (
     <React.Fragment>
       <PickerHeader
@@ -26,10 +27,12 @@ function DayMode(props) {
         onDateClick={onDateClick}
         activeDate={activeDate}
         showedMonth={dateToShow}
+        switchMode={switchMode}
+        shouldShowTimeButton={shouldShowTimeButton}
       />
     </React.Fragment>
   );
-}
+};
 
 DayMode.propTypes = {
   handleHeaderDateClick: PropTypes.func,
@@ -38,6 +41,8 @@ DayMode.propTypes = {
   onDateClick: PropTypes.func,
   dateToShow: PropTypes.object,
   activeDate: PropTypes.object,
+  switchMode: PropTypes.func,
+  shouldShowTimeButton: PropTypes.bool,
 };
 
 export default DayMode;

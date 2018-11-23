@@ -58,6 +58,7 @@ class DateTimeInput extends YearPickerMixin {
       onDateClick,
       onHourClick,
       onMinuteClick,
+      switchMode,
     } = this.props;
 
     return (
@@ -84,6 +85,9 @@ class DateTimeInput extends YearPickerMixin {
           yearsRange={this.getYearsRange()}
           onPrevBtnClick={this.onPrevBtnClick}
           onNextBtnClick={this.onNextBtnClick}
+          switchMode={switchMode}
+          shouldShowTimeButton={true}
+          shouldShowDayButton={true}
         />
       </Table>
     );
@@ -156,6 +160,7 @@ DateTimeInput.propTypes = {
    * @param {SyntheticEvent} event React's original SyntheticEvent.
    * @param {object} data All props and proposed value.
    */
+  switchMode: PropTypes.func,
   onChange: PropTypes.func,
   /** Same as semantic-ui-react Input's ``icon`` prop. */
   icon: PropTypes.any,
