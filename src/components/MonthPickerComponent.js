@@ -1,72 +1,46 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { getUnhandledProps, getMonths } from '../lib';
 import { Table } from 'semantic-ui-react';
-import _ from 'lodash';
+import map from 'lodash/map';
+import chunk from 'lodash/chunk';
 
-function MonthPickerCell(props) {
-  const { 
-    onClick,
-    month
-  } = props;
-  const rest = getUnhandledProps(MonthPickerCell, props);
+import { getUnhandledProps, getMonths } from '../lib';
 
-  const onMonthClick = (event) => {
-    event.stopPropagation();
-    onClick(event, { ...props, value: month});
+import MonthPickerCell from './MonthPickerCell';
+
+class MonthPickerComponent extends Component {
+  _getRows = () => {
+    const { onMonthClick, activeMonth } = this.props;
+
+    const cellStyle = {
+      width: '33.333333%',
+      minWidth: '7em',
+    };
+    const months = map(getMonths(), month => (
+      <MonthPickerCell
+        style={cellStyle}
+        onClick={onMonthClick}
+        active={month === activeMonth.toString()}
+        month={month}
+        key={month}
+      />
+    ));
+    const rows = map(chunk(months, 3), (row, i) => (
+      <Table.Row key={i}>{row}</Table.Row>
+    ));
+    return rows;
   };
-   
-  return (
-    <Table.Cell
-      { ...rest }
-      onClick={onMonthClick}
-      className="suir-calendar date"
-      textAlign="center">
-      { month }
-    </Table.Cell>
-  );
+  render() {
+    const rest = getUnhandledProps(MonthPickerComponent, this.props);
+    return <Table.Body {...rest}>{this._getRows()}</Table.Body>;
+  }
 }
-
-function MonthPickerComponent(props) {
-  const { 
-    onMonthClick,
-    activeMonth
-  } = props;
-  const rest = getUnhandledProps(MonthPickerComponent, props);
-
-  const cellStyle = {
-    width: '33.333333%',
-    minWidth: '7em'
-  };
-  const months = getMonths().map((month) => (
-    <MonthPickerCell
-      style={cellStyle}
-      onClick={onMonthClick}
-      active={month === activeMonth.toString()}
-      month={month}
-      key={month} />
-  ));
-  const rows = _.chunk(months, 3).map((row, i) => <Table.Row key={i}>{ row }</Table.Row>);
-  return (
-    <Table.Body { ...rest }>
-      { rows }
-    </Table.Body>
-  );
-}
-
-MonthPickerCell.propTypes = {
-  /** (event, data) => {} */
-  onClick: PropTypes.func.isRequired,
-  month: PropTypes.string.isRequired
-};
 
 MonthPickerComponent.propTypes = {
   /** (event, data) => {} */
   onMonthClick: PropTypes.func.isRequired,
-  activeMonth: PropTypes.string
+  activeMonth: PropTypes.string,
 };
 
 export default MonthPickerComponent;
-export {
-  MonthPickerComponent
-};
+export { MonthPickerComponent };
