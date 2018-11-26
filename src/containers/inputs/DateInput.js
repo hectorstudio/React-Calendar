@@ -13,9 +13,13 @@ import {
 import { DATE_INPUT } from '../../lib/COMPONENT_TYPES.js';
 import { DatePickerContent } from '../../components/pickerContent/DatePickerContent.js';
 
-const validateDate = (date, dateFormat) => {
+const validateDate = (date, dateFormat, onValidateError, onValidated) => {
   const mmDate = moment(trim(date), dateFormat, true);
-  return mmDate.isValid() ? mmDate : null;
+  if (mmDate.isValid()) {
+    onValidated();
+    return mmDate;
+  }
+  onValidateError();
 };
 
 class DateInput extends YearPickerMixin {
@@ -87,8 +91,9 @@ class DateInput extends YearPickerMixin {
   _onChange = e => {
     const value = e.target.value;
 
-    const { dateFormat, onChange } = this.props;
-    const date = validateDate(value, dateFormat);
+    const { dateFormat, onChange, onValidateError, onValidated } = this.props;
+
+    const date = validateDate(value, dateFormat, onValidateError, onValidated);
     if (date) {
       onChange(date);
     }
@@ -158,6 +163,8 @@ DateInput.propTypes = {
     'bottom center',
   ]),
   inline: PropTypes.bool,
+  onValidateError: PropTypes.func,
+  onValidated: PropTypes.func,
 };
 
 DateInput.defaultProps = {

@@ -13,9 +13,13 @@ import {
 import { DATE_TIME_INPUT } from '../../lib/COMPONENT_TYPES.js';
 import { DateTimePickerContent } from '../../components/pickerContent/DateTimePickerContent.js';
 
-const validateDate = (date, dateFormat) => {
+const validateDate = (date, dateFormat, onValidateError, onValidated) => {
   const mmDate = moment(trim(date), dateFormat, true);
-  return mmDate.isValid() ? mmDate : null;
+  if (mmDate.isValid()) {
+    onValidated();
+    return mmDate;
+  }
+  onValidateError();
 };
 
 class DateTimeInput extends YearPickerMixin {
@@ -107,9 +111,19 @@ class DateTimeInput extends YearPickerMixin {
 
   _onChange = e => {
     const value = e.target.value;
-    const { dateTimeFormat, onDateTimeChange } = this.props;
+    const {
+      dateTimeFormat,
+      onDateTimeChange,
+      onValidateError,
+      onValidated,
+    } = this.props;
 
-    const date = validateDate(value, dateTimeFormat);
+    const date = validateDate(
+      value,
+      dateTimeFormat,
+      onValidateError,
+      onValidated,
+    );
     if (date) {
       onDateTimeChange(date);
     }
@@ -164,7 +178,7 @@ DateTimeInput.propTypes = {
   onChange: PropTypes.func,
   /** Same as semantic-ui-react Input's ``icon`` prop. */
   icon: PropTypes.any,
-  /** Date formatting string.
+  /** Date formatting string.onValidated
    * Anything that that can be passed to ``moment().format``.
    */
   dateTimeFormat: PropTypes.string,
@@ -181,6 +195,8 @@ DateTimeInput.propTypes = {
     'bottom center',
   ]),
   inline: PropTypes.bool,
+  onValidateError: PropTypes.func,
+  onValidated: PropTypes.func,
 };
 
 DateTimeInput.defaultProps = {
