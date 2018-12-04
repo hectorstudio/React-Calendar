@@ -110,15 +110,11 @@ const getUnhandledProps = (Component, props) => {
   // Note that `handledProps` are generated automatically during build with `babel-plugin-transform-react-handled-props`
   const { handledProps = [] } = Component;
 
-  return reduce(
-    keys(props),
-    ((acc, propKey) => {
-      if (propKey === 'childKey') return acc;
-      if (!includes(handledProps, propKey)) acc[propKey] = props[propKey];
-      return acc;
-    },
-    {}),
-  );
+  return Object.keys(props).reduce((acc, propKey) => {
+    if (propKey === 'childKey') return acc;
+    if (handledProps.indexOf(propKey) === -1) acc[propKey] = props[propKey];
+    return acc;
+  }, {});
 };
 
 const cloneReplaceValue = (data, newValue) => {
