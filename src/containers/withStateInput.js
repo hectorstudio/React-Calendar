@@ -158,7 +158,7 @@ function withStateInput(WrappedComponent) {
         nextDateTime.year(selectedMoment.year());
         nextDateTime.month(selectedMoment.month());
         nextDateTime.date(selectedMoment.date());
-        onDateTimeChange(nextDateTime);
+        if (onDateTimeChange) onDateTimeChange(nextDateTime);
         ///////////////////////////////////
       }
     };
@@ -182,7 +182,7 @@ function withStateInput(WrappedComponent) {
       const { hour } = data;
       const nextDateTime = moment(dateTimeValue);
       nextDateTime.hour(hour);
-      onDateTimeChange(nextDateTime);
+      if (onDateTimeChange) onDateTimeChange(nextDateTime);
       ///////////////////////////////////
 
       tick(() => {
@@ -199,7 +199,7 @@ function withStateInput(WrappedComponent) {
       const { minute } = data;
       const nextDateTime = moment(dateTimeValue);
       nextDateTime.minute(minute);
-      onDateTimeChange(nextDateTime);
+      if (onDateTimeChange) onDateTimeChange(nextDateTime);
       ///////////////////////////////////
 
       this.setState(prevState => {
@@ -228,7 +228,7 @@ function withStateInput(WrappedComponent) {
       const { onDateTimeChange, dateTimeValue } = this.props;
       const nextDateTime = moment(dateTimeValue);
       nextDateTime.year(data.value);
-      onDateTimeChange(nextDateTime);
+      if (onDateTimeChange) onDateTimeChange(nextDateTime);
       ///////////////////////////////////
 
       const date = {
@@ -246,7 +246,7 @@ function withStateInput(WrappedComponent) {
       const { onDateTimeChange, dateTimeValue } = this.props;
       const nextDateTime = moment(dateTimeValue);
       nextDateTime.month(monthIndex(data.value));
-      onDateTimeChange(nextDateTime);
+      if (onDateTimeChange) onDateTimeChange(nextDateTime);
       ///////////////////////////////////
 
       const date = {

@@ -1,71 +1,57 @@
 import React from 'react';
 import { Input, Table } from 'semantic-ui-react';
-import { CustomPopup as Popup } from '../';
+import invoke from 'lodash/invoke';
 import PropTypes from 'prop-types';
+
+import { CustomPopup as Popup } from '../';
 import { getUnhandledProps } from '../../lib';
-import {
-  MONTH_INPUT
-} from '../../lib/COMPONENT_TYPES.js';
-import _ from 'lodash';
+import { MONTH_INPUT } from '../../lib/COMPONENT_TYPES.js';
 import { MonthPickerComponent } from '../../components';
 
 class MonthInput extends React.Component {
   static META = {
     type: MONTH_INPUT,
-    name: 'MonthInput'
-  }
+    name: 'MonthInput',
+  };
 
   onMonthClick = (event, data) => {
-    this.setState({ activeMonth: data.value });
     this.onMonthUpdate(event, data);
-  }
+  };
 
   onMonthUpdate = (event, data) => {
-    _.invoke(this.props, 'onChange', event, { ...this.props, value: data.value });
+    invoke(this.props, 'onChange', event, {
+      ...this.props,
+      value: data.value,
+    });
   };
 
   getPicker() {
     const rest = getUnhandledProps(MonthInput, this.props);
-
+    const { value } = this.props;
     return (
-      <Table
-        { ...rest }
-        unstackable
-        celled
-        textAlign="center">
+      <Table {...rest} unstackable celled textAlign="center">
         <MonthPickerComponent
           onMonthClick={this.onMonthClick}
-          activeMonth={this.props.value} />
+          activeMonth={value}
+        />
       </Table>
     );
   }
 
   render() {
-    const {
-      onChange,
-      icon,
-      popupPosition,
-      inline,
-      value
-    } = this.props;
-    
+    const { onChange, icon, popupPosition, inline, value } = this.props;
+
     const rest = getUnhandledProps(MonthInput, this.props);
-  
+
     const inputElement = (
-      <Input
-        { ...rest }
-        value={value}
-        icon={icon}
-        onChange={onChange} />
+      <Input {...rest} value={value} icon={icon} onChange={onChange} />
     );
     if (inline) {
       return this.getPicker();
     }
     return (
-      <Popup
-        position={popupPosition}
-        trigger={inputElement}>
-        { this.getPicker() }
+      <Popup position={popupPosition} trigger={inputElement}>
+        {this.getPicker()}
       </Popup>
     );
   }
@@ -75,7 +61,7 @@ MonthInput.propTypes = {
   /** Called on change.
    * @param {SyntheticEvent} event React's original SyntheticEvent.
    * @param {object} data All props and proposed value.
-  */
+   */
   onChange: PropTypes.func,
   /** Same as semantic-ui-react Input's ``icon`` prop. */
   icon: PropTypes.any,
@@ -87,17 +73,16 @@ MonthInput.propTypes = {
     'right center',
     'left center',
     'top center',
-    'bottom center'
+    'bottom center',
   ]),
-  inline: PropTypes.bool
+  inline: PropTypes.bool,
+  value: PropTypes.string,
 };
 
 MonthInput.defaultProps = {
   icon: 'calendar',
-  inline: false
+  inline: false,
 };
 
 export default MonthInput;
-export {
-  MonthInput
-};
+export { MonthInput };

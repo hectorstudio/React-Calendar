@@ -1,34 +1,57 @@
 import moment from 'moment';
-import _ from 'lodash';
+import keys from 'lodash/keys';
+import reduce from 'lodash/reduce';
+import includes from 'lodash/includes';
+import assign from 'lodash/assign';
+import noop from 'lodash/noop';
+import range from 'lodash/range';
 
-const _getCalendarStart = (referenceDate) => {
-  return referenceDate.clone().startOf('month').startOf('week');
+const _getCalendarStart = referenceDate => {
+  return referenceDate
+    .clone()
+    .startOf('month')
+    .startOf('week');
 };
 
-const getArrayOfWeeks = (referenceDate, weeks = 6 ) => {
-  const weeksList = new Array(weeks);
-  let day = _getCalendarStart(referenceDate).clone();
-  for (let i = 0; i < weeksList.length; i++) {
-    weeksList[i] = [];
-    for (let j = 0; j < 7; j++) {
-      weeksList[i][j] = day.clone();
-      day.add(1, 'd');
-    }
-  }
+const getArrayOfWeeks = (referenceDate, weeks = 6) => {
+  const daysInWeekList = range(7);
+
+  const day = _getCalendarStart(referenceDate).clone();
+  const weeksList = reduce(
+    range(weeks),
+    arr => {
+      const allDaysInWeek = reduce(
+        daysInWeekList,
+        arr1 => {
+          arr1.push(day.clone());
+          day.add(1, 'd');
+          return arr1;
+        },
+        [],
+      );
+      arr.push(allDaysInWeek);
+      return arr;
+    },
+    [],
+  );
   return weeksList;
 };
 
 /** Compare two `moment`'s by date. */
 const compareDates = (oneDate, otherDate) => {
   if (!oneDate.year || !otherDate.year) return false;
-  return oneDate.year() === otherDate.year() && oneDate.month() === otherDate.month() && oneDate.date() === otherDate.date();
+  return (
+    oneDate.year() === otherDate.year() &&
+    oneDate.month() === otherDate.month() &&
+    oneDate.date() === otherDate.date()
+  );
 };
 
 /** Check if date should be showed as active in calendar.
  * Check if date is the same as `active` or is date included in given date's interval.
  * @param {moment} checkedDate Date which compared with `active`
  * @param {moment||{start: moment, end: moment}} active Eather date or date's interval as [start, end]
-*/
+ */
 const isActiveDate = (checkedDate, active) => {
   if (!checkedDate || !active) return false;
   if (active.hasOwnProperty('start') && active.hasOwnProperty('end')) {
@@ -41,22 +64,24 @@ const isActiveDate = (checkedDate, active) => {
     const normStart = moment({
       year: active.start.year(),
       month: active.start.month(),
-      date: active.start.date()
+      date: active.start.date(),
     });
     const normEnd = moment({
       year: active.end.year(),
       month: active.end.month(),
-      date: active.end.date()
+      date: active.end.date(),
     });
     const normCheckedDate = moment({
       year: checkedDate.year(),
       month: checkedDate.month(),
-      date: checkedDate.date()
+      date: checkedDate.date(),
     });
-    return normStart.isBefore(normCheckedDate)
-      && normEnd.isAfter(normCheckedDate)
-      || normStart.isSame(normCheckedDate)
-      || normEnd.isSame(normCheckedDate);
+    return (
+      (normStart.isBefore(normCheckedDate) &&
+        normEnd.isAfter(normCheckedDate)) ||
+      normStart.isSame(normCheckedDate) ||
+      normEnd.isSame(normCheckedDate)
+    );
   }
   return compareDates(checkedDate, active);
 };
@@ -68,18 +93,11 @@ const isDayInMonth = (day, date) => {
 };
 
 /** Return array of week day names.
- * 
+ *
  * getWeekDays() --> ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Su']
  */
-const getWeekDays = (long = false) => {
-  const weekDays = [];
-  let day = moment().startOf('week');
-  for (let i = 0; i < 7; i++) {
-    weekDays[i] = day.format(long? 'dddd' : 'dd');
-    day.add(1, 'd');
-  }
-  return weekDays;
-};
+const getWeekDays = (long = false) =>
+  long ? moment.weekdays() : moment.weekdaysMin();
 
 /**
  * Returns an object consisting of props beyond the scope of the Component.
@@ -100,21 +118,19 @@ const getUnhandledProps = (Component, props) => {
 };
 
 const cloneReplaceValue = (data, newValue) => {
-  return _.assign({}, data, { value: newValue });
+  return assign({}, data, { value: newValue });
 };
-
-const emptyFunction = () => {};
 
 const getMonths = () => {
   return moment.monthsShort();
 };
 
-const monthIndex = (month) => {
+const monthIndex = month => {
   return getMonths().indexOf(month);
 };
 
 /** Set zero timeout.
- * 
+ *
  * Sometimes we need to delay rerendering components
  * on one tick (if they are inside  `Popup` and rerendering could
  * change `Popup`'s content sizes).
@@ -123,10 +139,10 @@ const monthIndex = (month) => {
  * should popup stay open or be closed. So we need
  * to wait until `Popup`'s onclick handler done its job.
  */
-const tick = (leadToRerendering) => {
+const tick = leadToRerendering => {
   setTimeout(leadToRerendering, 0);
 };
-
+const emptyFunction = noop();
 export {
   getArrayOfWeeks,
   isActiveDate,
@@ -137,5 +153,5 @@ export {
   emptyFunction,
   getMonths,
   monthIndex,
-  tick
+  tick,
 };
