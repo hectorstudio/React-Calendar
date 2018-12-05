@@ -8,6 +8,9 @@ Here you can find a live example https://arfedulov.ru/examples/semantic-ui-calen
 # installation
 ``npm i semantic-ui-calendar-react``
 
+# run
+``npm run build && npm start``
+Run `npm run build && npm start`
 Also you need to add css in your html:
 ``<link rel="stylesheet" type="text/css" href="node_modules/semantic-ui-calendar-react/dist/css/calendar.min.css">``
 
