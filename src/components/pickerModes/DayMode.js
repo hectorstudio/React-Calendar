@@ -12,6 +12,8 @@ const DayMode = ({
   activeDate,
   switchMode,
   shouldShowTimeButton,
+  shouldShowClosePopupButton,
+  closePopup,
 }) => {
   return (
     <React.Fragment>
@@ -28,7 +30,9 @@ const DayMode = ({
         activeDate={activeDate}
         showedMonth={dateToShow}
         switchMode={switchMode}
+        closePopup={closePopup}
         shouldShowTimeButton={shouldShowTimeButton}
+        shouldShowClosePopupButton={shouldShowClosePopupButton}
       />
     </React.Fragment>
   );
@@ -42,7 +46,9 @@ DayMode.propTypes = {
   dateToShow: PropTypes.object,
   activeDate: PropTypes.object,
   switchMode: PropTypes.func,
+  closePopup: PropTypes.func,
   shouldShowTimeButton: PropTypes.bool,
+  shouldShowClosePopupButton: PropTypes.bool,
 };
 
 export default DayMode;

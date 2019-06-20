@@ -35,10 +35,13 @@ class DateTimeInput extends YearPickerMixin {
       yearsStart: props.dateToShow.year() - 6,
     };
 
-    const { dateTimeValue, dateTimeFormat } = props;
+    const { dateTimeValue, dateTimeFormat, nullMessage } = props;
     this.state = {
+      isOpenPopup: false,
       yearsStart: props.dateToShow.year() - 6,
-      dateTimeValue: dateTimeValue.format(dateTimeFormat),
+      dateTimeValue: dateTimeValue
+        ? dateTimeValue.format(dateTimeFormat)
+        : nullMessage,
     };
   }
 
@@ -92,6 +95,7 @@ class DateTimeInput extends YearPickerMixin {
           switchMode={switchMode}
           shouldShowTimeButton={true}
           shouldShowDayButton={true}
+          closePopup={this._handleClosePopup}
         />
       </Table>
     );
@@ -129,7 +133,12 @@ class DateTimeInput extends YearPickerMixin {
     }
     this.setState({ dateTimeValue: value });
   };
-
+  _handleOpenPopup = () => {
+    this.setState({ isOpenPopup: true });
+  };
+  _handleClosePopup = () => {
+    this.setState({ isOpenPopup: false });
+  };
   render() {
     const {
       className,
@@ -142,7 +151,7 @@ class DateTimeInput extends YearPickerMixin {
       popupPosition,
     } = this.props;
 
-    const { dateTimeValue } = this.state;
+    const { dateTimeValue, isOpenPopup } = this.state;
 
     const inputElement = (
       <Input
@@ -162,7 +171,14 @@ class DateTimeInput extends YearPickerMixin {
       return this.getPicker();
     }
     return (
-      <Popup position={popupPosition} trigger={inputElement}>
+      <Popup
+        position={popupPosition}
+        trigger={inputElement}
+        open={isOpenPopup}
+        onClose={this._handleClosePopup}
+        onOpen={this._handleOpenPopup}
+        on="click"
+      >
         {this.getPicker()}
       </Popup>
     );
@@ -197,6 +213,7 @@ DateTimeInput.propTypes = {
   inline: PropTypes.bool,
   onValidateError: PropTypes.func,
   onValidated: PropTypes.func,
+  nullMessage: PropTypes.string,
 };
 
 DateTimeInput.defaultProps = {

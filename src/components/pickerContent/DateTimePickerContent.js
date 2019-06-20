@@ -28,6 +28,7 @@ const DateTimePickerContent = ({
   onPrevBtnClick,
   onNextBtnClick,
   switchMode,
+  closePopup,
   shouldShowTimeButton,
   shouldShowDayButton,
 }) => {
@@ -51,6 +52,7 @@ const DateTimePickerContent = ({
         onNextBtnClick={onNextBtnClick}
         switchMode={switchMode}
         shouldShowTimeButton={shouldShowTimeButton}
+        closePopup={closePopup}
       />
     );
   }
@@ -100,6 +102,7 @@ DateTimePickerContent.propTypes = {
   onPrevBtnClick: PropTypes.func,
   onNextBtnClick: PropTypes.func,
   switchMode: PropTypes.func,
+  closePopup: PropTypes.func,
   shouldShowDayButton: PropTypes.bool,
   shouldShowTimeButton: PropTypes.bool,
 };

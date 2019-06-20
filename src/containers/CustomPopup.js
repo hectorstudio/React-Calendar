@@ -6,10 +6,8 @@ const CustomPopup = props => (
     {...props}
     flowing
     id="suirCalendarPopup"
-    hideOnScroll
     on="click"
     className="suir-calendar popup"
-    hoverable
   />
 );
 

@@ -1,7 +1,5 @@
 import moment from 'moment';
-import keys from 'lodash/keys';
 import reduce from 'lodash/reduce';
-import includes from 'lodash/includes';
 import assign from 'lodash/assign';
 import noop from 'lodash/noop';
 import range from 'lodash/range';
@@ -13,7 +11,8 @@ const _getCalendarStart = referenceDate => {
     .startOf('week');
 };
 
-const getArrayOfWeeks = (referenceDate, weeks = 6) => {
+const getArrayOfWeeks = (referenceDateParam, weeks = 6) => {
+  const referenceDate = referenceDateParam ? referenceDateParam : moment();
   const daysInWeekList = range(7);
 
   const day = _getCalendarStart(referenceDate).clone();

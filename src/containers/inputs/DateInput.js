@@ -27,14 +27,16 @@ class DateInput extends YearPickerMixin {
     type: DATE_INPUT,
     name: 'DateInput',
   };
-
+  state = {
+    isOpenPopup: false,
+  };
   constructor(props) {
     super(props);
 
-    const { value, dateFormat } = props;
+    const { value, dateFormat, nullMessage } = props;
     this.state = {
       yearsStart: props.dateToShow.year() - 6,
-      dateValue: value.format(dateFormat),
+      dateValue: value ? value.format(dateFormat) : nullMessage,
     };
   }
 
@@ -83,6 +85,7 @@ class DateInput extends YearPickerMixin {
           onPrevBtnClick={this.onPrevBtnClick}
           onNextBtnClick={this.onNextBtnClick}
           setDatesRange={setDatesRange}
+          closePopup={this._handleClosePopup}
         />
       </Table>
     );
@@ -99,7 +102,13 @@ class DateInput extends YearPickerMixin {
     }
     this.setState({ dateValue: value });
   };
+  _handleOpenPopup = () => {
+    this.setState({ isOpenPopup: true });
+  };
 
+  _handleClosePopup = () => {
+    this.setState({ isOpenPopup: false });
+  };
   render() {
     const {
       className,
@@ -112,7 +121,7 @@ class DateInput extends YearPickerMixin {
       popupPosition,
     } = this.props;
 
-    const { dateValue } = this.state;
+    const { dateValue, isOpenPopup } = this.state;
 
     const inputElement = (
       <Input
@@ -132,7 +141,14 @@ class DateInput extends YearPickerMixin {
       return this.getPicker();
     }
     return (
-      <Popup position={popupPosition} trigger={inputElement}>
+      <Popup
+        position={popupPosition}
+        trigger={inputElement}
+        open={isOpenPopup}
+        onClose={this._handleClosePopup}
+        onOpen={this._handleOpenPopup}
+        on="click"
+      >
         {this.getPicker()}
       </Popup>
     );
@@ -165,6 +181,7 @@ DateInput.propTypes = {
   inline: PropTypes.bool,
   onValidateError: PropTypes.func,
   onValidated: PropTypes.func,
+  nullMessage: PropTypes.string,
 };
 
 DateInput.defaultProps = {
@@ -172,6 +189,7 @@ DateInput.defaultProps = {
   dateFormat: 'DD-MM-YYYY',
   startMode: 'day',
   inline: false,
+  nullMessage: 'Null',
 };
 
 const WrappedDateInput = withStateInput(DateInput);

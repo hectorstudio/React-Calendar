@@ -30,3 +30,12 @@
   margin-left: 10px;
   margin-top: 6px;
 }
+
+.footer-button {
+  cursor: 'pointer';
+}
+
+.suir-calendar .row {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
