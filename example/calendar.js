@@ -80,6 +80,7 @@ class DateTimeForm extends React.Component {
           onValidateError={this._onValidateError}
           onValidated={this._onValidated}
           onChange={this._onDateChange}
+          nullMessage="No Expired Date"
         />
         <DateTimeInput
           dateTimeFormat="DD-MM-YYYY hh:mm:ss A"
@@ -91,6 +92,7 @@ class DateTimeForm extends React.Component {
           onValidateError={this._onValidateError}
           onValidated={this._onValidated}
           onDateTimeChange={this._onDateTimeChange}
+          nullMessage="No Expired Date"
         />
       </Form>
     );

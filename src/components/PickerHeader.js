@@ -73,7 +73,7 @@ class PickerHeader extends Component {
     );
 
     const buttonClasses = ClassNames('suir-calendar', 'button');
-    const headerCellStyle = { cursor: 'pointer ' };
+    const headerCellStyle = { cursor: 'pointer' };
     return (
       <Table.Header>
         {activeDatesRange && this._getRangeRow()}

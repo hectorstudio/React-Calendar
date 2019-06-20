@@ -356,7 +356,8 @@ function withStateInput(WrappedComponent) {
     };
 
     switchToPrevMode = (lastMode = 'day') => {
-      this.setState({ mode: getPrevMode(this.state.mode, lastMode) });
+      const nextMode = getPrevMode(this.state.mode, lastMode);
+      this.setState({ mode: nextMode });
     };
 
     switchMode = mode => {
@@ -425,8 +426,12 @@ function withStateInput(WrappedComponent) {
       });
     };
 
-    handleHeaderDateClick = () => {
-      this.switchToPrevMode();
+    handleHeaderDateClick = e => {
+      e.preventDefault();
+      e.stopPropagation();
+      setTimeout(() => {
+        this.switchToPrevMode();
+      }, 0);
     };
 
     handleHeaderTimeClick = () => {

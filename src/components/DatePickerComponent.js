@@ -1,5 +1,5 @@
 import React, { Fragment, Component } from 'react';
-import { Table, Button, Icon } from 'semantic-ui-react';
+import { Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import map from 'lodash/map';
@@ -11,6 +11,7 @@ import {
   getUnhandledProps,
 } from '../lib';
 
+import PopupFooter from './PopupFooter';
 import DatePickerCell from './DatePickerCell.js';
 
 class DatePickerComponent extends Component {
@@ -22,9 +23,10 @@ class DatePickerComponent extends Component {
       datesRange,
       onDateClick,
     } = this.props;
+    const finalShowedMonth = showedMonth ? showedMonth : moment();
     const days = map(week, day => {
       const active = isActiveDate(day, activeDate || datesRange);
-      const disabled = !isDayInMonth(day, showedMonth);
+      const disabled = !isDayInMonth(day, finalShowedMonth);
       return (
         <DatePickerCell
           onClick={setDatesRange || onDateClick}
@@ -37,38 +39,28 @@ class DatePickerComponent extends Component {
     });
     return <Table.Row key={key}>{days}</Table.Row>;
   };
-  _onButtonClick = event => {
-    event.preventDefault();
-    event.stopPropagation();
-    const { switchMode } = this.props;
-    setTimeout(() => {
-      switchMode('hour');
-    }, 0);
-  };
   _getTableContent = weeks => {
     return map(weeks, week => this._getRow(week, week[0].format('YYYY-MM-DD')));
   };
   render() {
-    const { showedMonth, shouldShowTimeButton } = this.props;
+    const {
+      showedMonth,
+      shouldShowTimeButton,
+      closePopup,
+      switchMode,
+      shouldShowClosePopupButton,
+    } = this.props;
     const rest = getUnhandledProps(DatePickerComponent, this.props);
     const data = getArrayOfWeeks(showedMonth);
     return (
       <Fragment>
         <Table.Body {...rest}>{this._getTableContent(data)}</Table.Body>
-        <Table.Footer>
-          {shouldShowTimeButton && (
-            <Table.Row>
-              <Table.Cell
-                colSpan="7"
-                style={{ cursor: 'pointer' }}
-                onClick={this._onButtonClick}
-                className="suir-calendar date"
-              >
-                <Icon name="clock" />Time
-              </Table.Cell>
-            </Table.Row>
-          )}
-        </Table.Footer>
+        <PopupFooter
+          shouldShowTimeButton={shouldShowTimeButton}
+          shouldShowClosePopupButton={shouldShowClosePopupButton}
+          switchMode={switchMode}
+          closePopup={closePopup}
+        />
       </Fragment>
     );
   }
@@ -85,7 +77,9 @@ DatePickerComponent.propTypes = {
   /** Dates range */
   datesRange: PropTypes.object,
   switchMode: PropTypes.func,
+  closePopup: PropTypes.func,
   shouldShowTimeButton: PropTypes.bool,
+  shouldShowClosePopupButton: PropTypes.bool,
 };
 
 DatePickerComponent.defaultProps = {
