@@ -84,7 +84,8 @@ class HourPicker extends Component {
               onClick={this._onButtonClick}
               className="suir-calendar date"
             >
-              <Icon name="calendar" />Day
+              <Icon name="calendar" />
+              Day
             </Table.Cell>
           </Table.Row>
         )}
@@ -102,4 +103,3 @@ HourPicker.propTypes = {
 };
 
 export default HourPicker;
-export { HourPicker };

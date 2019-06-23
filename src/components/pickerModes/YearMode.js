@@ -36,4 +36,3 @@ YearMode.propTypes = {
   value: PropTypes.string,
 };
 export default YearMode;
-export { YearMode };

@@ -161,4 +161,3 @@ ControlledCustomPopup.propTypes = {
 };
 
 export default ControlledCustomPopup;
-export { ControlledCustomPopup };

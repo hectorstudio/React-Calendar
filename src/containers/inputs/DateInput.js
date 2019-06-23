@@ -8,10 +8,10 @@ import {
   CustomPopup as Popup,
   CustomInput as Input,
   withStateInput,
-  YearPickerMixin,
 } from '../';
-import { DATE_INPUT } from '../../lib/COMPONENT_TYPES.js';
-import { DatePickerContent } from '../../components/pickerContent/DatePickerContent.js';
+import YearPickerMixin from '../yearPickerMixin';
+import { DATE_INPUT } from '../../lib/COMPONENT_TYPES';
+import DatePickerContent from '../../components/pickerContent/DatePickerContent';
 
 const validateDate = (date, dateFormat, onValidateError, onValidated) => {
   const mmDate = moment(trim(date), dateFormat, true);
@@ -195,4 +195,3 @@ DateInput.defaultProps = {
 const WrappedDateInput = withStateInput(DateInput);
 
 export default WrappedDateInput;
-export { WrappedDateInput as DateInput };

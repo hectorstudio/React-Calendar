@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import invoke from 'lodash/invoke';
+import get from 'lodash/get';
 
 import { monthIndex, cloneReplaceValue, emptyFunction, tick } from '../lib';
-import { DATE_INPUT, DATE_TIME_INPUT } from '../lib/COMPONENT_TYPES.js';
-import { EVENTS, dispatchDateChange } from '../lib/events.js';
+import { DATE_INPUT, DATE_TIME_INPUT } from '../lib/COMPONENT_TYPES';
+import { EVENTS, dispatchDateChange } from '../lib/events';
 
 const getPrevMode = (mode, lastMode) => {
   if (mode === 'minute') return 'hour';
@@ -40,7 +41,6 @@ function withStateInput(WrappedComponent) {
         WrappedComponent.META && WrappedComponent.META.name;
       return wrappedComponentName ? wrappedComponentName : 'WithStateInput';
     }
-
     static propTypes = {
       /** (event, data) => {} */
       onDateChange: PropTypes.func,
@@ -150,6 +150,7 @@ function withStateInput(WrappedComponent) {
       if (WrappedComponent.META.type === DATE_INPUT) {
         const { onChange } = this.props;
         onChange(data.value);
+        this.onClosePopup();
       } else if (WrappedComponent.META.type === DATE_TIME_INPUT) {
         ///////////////////////////////////
         const { onDateTimeChange, dateTimeValue } = this.props;
@@ -160,6 +161,12 @@ function withStateInput(WrappedComponent) {
         nextDateTime.date(selectedMoment.date());
         if (onDateTimeChange) onDateTimeChange(nextDateTime);
         ///////////////////////////////////
+      }
+    };
+
+    onClosePopup = () => {
+      if (get(this.mainComponentRef, 'current', '')._handleClosePopup) {
+        this.mainComponentRef.current._handleClosePopup();
       }
     };
 
@@ -181,7 +188,8 @@ function withStateInput(WrappedComponent) {
       const { onDateTimeChange, dateTimeValue } = this.props;
       const { hour } = data;
       const nextDateTime = moment(dateTimeValue);
-      nextDateTime.hour(hour);
+      nextDateTime.set({ hour });
+
       if (onDateTimeChange) onDateTimeChange(nextDateTime);
       ///////////////////////////////////
 
@@ -195,25 +203,26 @@ function withStateInput(WrappedComponent) {
     onMinuteClick = (event, data) => {
       ///////////////////////////////////
       const { onDateTimeChange, dateTimeValue } = this.props;
-
       const { minute } = data;
+
       const nextDateTime = moment(dateTimeValue);
-      nextDateTime.minute(minute);
+      nextDateTime.set({ minute });
       if (onDateTimeChange) onDateTimeChange(nextDateTime);
       ///////////////////////////////////
-
-      this.setState(prevState => {
-        const newData = cloneReplaceValue(
-          data,
-          getTime({
-            hour: prevState.activeHour,
-            minute: data.value,
-          }),
-        );
-        this.onTimeChange(event, newData);
-        return {
-          activeMinute: data.value,
-        };
+      tick(() => {
+        this.setState(prevState => {
+          const newData = cloneReplaceValue(
+            data,
+            getTime({
+              hour: prevState.activeHour,
+              minute: minute,
+            }),
+          );
+          this.onTimeChange(event, newData);
+          return {
+            activeMinute: minute,
+          };
+        }, this.onClosePopup);
       });
     };
     onDatesRangeChange = (event, data) => {
@@ -346,6 +355,7 @@ function withStateInput(WrappedComponent) {
       if (startStr) return `${startStr} - ${endStr}`;
       return '';
     };
+    mainComponentRef = createRef();
 
     updateDateToShow = () => {
       if (this.props.value) {
@@ -454,6 +464,7 @@ function withStateInput(WrappedComponent) {
         <WrappedComponent
           {...this.props}
           {...this.state}
+          ref={this.mainComponentRef}
           activeDate={activeDate}
           setDatesRange={this.setDatesRange}
           getDatesRange={this.setDatesRange}
@@ -486,4 +497,3 @@ function withStateInput(WrappedComponent) {
 }
 
 export default withStateInput;
-export { withStateInput };

@@ -6,7 +6,7 @@ import moment from 'moment';
 
 import { CustomPopup as Popup } from '../';
 import { getUnhandledProps, tick } from '../../lib';
-import { TIME_INPUT } from '../../lib/COMPONENT_TYPES.js';
+import { TIME_INPUT } from '../../lib/COMPONENT_TYPES';
 import { TimePickerComponent } from '../../components';
 
 const parseTime = (value, outFormat = 'HH:mm') => {
@@ -133,4 +133,3 @@ TimeInput.defaultProps = {
 };
 
 export default TimeInput;
-export { TimeInput };

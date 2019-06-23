@@ -129,4 +129,3 @@ PickerHeader.defaultProps = {
 };
 
 export default PickerHeader;
-export { PickerHeader };

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { MonthMode } from '../pickerModes/MonthMode.js';
-import { DayMode } from '../pickerModes/DayMode.js';
-import { YearMode } from '../pickerModes/YearMode.js';
+import MonthMode from '../pickerModes/MonthMode';
+import DayMode from '../pickerModes/DayMode';
+import YearMode from '../pickerModes/YearMode';
 
 const DatePickerContent = ({
   mode,
@@ -89,4 +89,3 @@ DatePickerContent.propTypes = {
   closePopup: PropTypes.func,
 };
 export default DatePickerContent;
-export { DatePickerContent };

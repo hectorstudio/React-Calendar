@@ -8,7 +8,6 @@ class MinutePickerCell extends Component {
   _onMinuteClick = event => {
     event.stopPropagation();
     const { onClick, minute } = this.props;
-
     onClick(event, { ...this.props, value: minute });
   };
   render() {

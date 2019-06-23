@@ -52,4 +52,3 @@ DayMode.propTypes = {
 };
 
 export default DayMode;
-export { DayMode };

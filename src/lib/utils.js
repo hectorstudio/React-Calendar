@@ -3,6 +3,8 @@ import reduce from 'lodash/reduce';
 import assign from 'lodash/assign';
 import noop from 'lodash/noop';
 import range from 'lodash/range';
+import keys from 'lodash/keys';
+import includes from 'lodash/includes';
 
 const _getCalendarStart = referenceDate => {
   return referenceDate
@@ -109,11 +111,15 @@ const getUnhandledProps = (Component, props) => {
   // Note that `handledProps` are generated automatically during build with `babel-plugin-transform-react-handled-props`
   const { handledProps = [] } = Component;
 
-  return Object.keys(props).reduce((acc, propKey) => {
-    if (propKey === 'childKey') return acc;
-    if (handledProps.indexOf(propKey) === -1) acc[propKey] = props[propKey];
-    return acc;
-  }, {});
+  return reduce(
+    keys(props),
+    (acc, propKey) => {
+      if (propKey === 'childKey') return acc;
+      if (!includes(handledProps, propKey)) acc[propKey] = props[propKey];
+      return acc;
+    },
+    {},
+  );
 };
 
 const cloneReplaceValue = (data, newValue) => {

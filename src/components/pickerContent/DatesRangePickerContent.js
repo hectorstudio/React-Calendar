@@ -44,4 +44,3 @@ DatesRangePickerContent.propTypes = {
 };
 
 export default DatesRangePickerContent;
-export { DatesRangePickerContent };

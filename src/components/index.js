@@ -1,7 +1,17 @@
-export { DatePickerComponent } from './DatePickerComponent.js';
-export { TimePickerComponent } from './TimePickerComponent.js';
-export { HourPicker } from './HourPicker.js';
-export { MinutePicker } from './MinutePicker.js';
-export { YearPickerComponent } from './YearPickerComponent.js';
-export { MonthPickerComponent } from './MonthPickerComponent.js';
-export { PickerHeader } from './PickerHeader.js';
+import DatePickerComponent from './DatePickerComponent';
+import TimePickerComponent from './TimePickerComponent';
+import HourPicker from './HourPicker';
+import MinutePicker from './MinutePicker';
+import YearPickerComponent from './YearPickerComponent';
+import MonthPickerComponent from './MonthPickerComponent';
+import PickerHeader from './PickerHeader';
+
+export {
+  DatePickerComponent,
+  TimePickerComponent,
+  HourPicker,
+  MinutePicker,
+  YearPickerComponent,
+  MonthPickerComponent,
+  PickerHeader,
+};

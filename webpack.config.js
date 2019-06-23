@@ -1,5 +1,7 @@
 const path = require('path');
 
+const assign = require('lodash/assign');
+
 const baseConfig = {
   module: {
     rules: [
@@ -9,32 +11,39 @@ const baseConfig = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['env', 'stage-0', 'react'],
+            presets: ['@babel/env', '@babel/react'],
             plugins: [
+              '@babel/proposal-class-properties',
+              '@babel/transform-react-jsx-source',
               'transform-react-handled-props',
-              'transform-react-jsx-source'
-            ]
-          }
-        }
-      }
-    ]
+            ],
+          },
+        },
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+    ],
   },
   devServer: {
     contentBase: path.resolve(__dirname, 'example'),
-    port: 9000
+    port: 9000,
   },
-  devtool: 'source-map'
+  devtool: 'source-map',
 };
 
-const config = Object.assign({
-  entry: {
-    calendar: './example/calendar.js'
+const config = assign(
+  {
+    entry: {
+      calendar: './example/calendar.js',
+    },
+    output: {
+      path: path.resolve(__dirname, 'example'),
+      filename: '[name].bundle.js',
+    },
+    mode: 'development',
   },
-  output: {
-    path: path.resolve(__dirname, 'example'),
-    filename: '[name].bundle.js'
-  },
-  mode: 'development'
-}, baseConfig);
-
+  baseConfig,
+);
 module.exports = config;

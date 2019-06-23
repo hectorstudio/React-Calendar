@@ -7,7 +7,7 @@ import trim from 'lodash/trim';
 import moment from 'moment';
 
 import { DATES_RANGE_INPUT } from '../../lib/COMPONENT_TYPES';
-import { DatesRangePickerContent } from '../../components/pickerContent/DatesRangePickerContent.js';
+import DatesRangePickerContent from '../../components/pickerContent/DatesRangePickerContent';
 import {
   ControlledCustomPopup as Popup,
   CustomInput as Input,
@@ -202,4 +202,3 @@ CustomDatesRangeInput.defaultProps = {
 const WrappedDatesRangeInput = withStateInput(CustomDatesRangeInput);
 
 export default WrappedDatesRangeInput;
-export { WrappedDatesRangeInput as CustomDatesRangeInput };

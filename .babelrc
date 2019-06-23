@@ -1,4 +1,4 @@
 {
-  "presets": ["env", "stage-0", "react"],
-  "plugins": ["transform-react-handled-props"]
+  "presets": ["@babel/preset-env", "@babel/react"],
+  "plugins": ["@babel/proposal-class-properties", "@babel/transform-react-jsx-source", "transform-react-handled-props"]
 }

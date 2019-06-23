@@ -80,4 +80,3 @@ TimePickerComponent.defaultProps = {
 };
 
 export default TimePickerComponent;
-export { TimePickerComponent };

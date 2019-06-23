@@ -49,4 +49,3 @@ YearPickerComponent.propTypes = {
 };
 
 export default YearPickerComponent;
-export { YearPickerComponent, getYears };

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { PickerHeader, TimePickerComponent } from '../';
 
-import { DatePickerContent } from './DatePickerContent.js';
+import DatePickerContent from './DatePickerContent';
 
 const DateTimePickerContent = ({
   activeDate,
@@ -107,4 +107,3 @@ DateTimePickerContent.propTypes = {
   shouldShowTimeButton: PropTypes.bool,
 };
 export default DateTimePickerContent;
-export { DateTimePickerContent };
