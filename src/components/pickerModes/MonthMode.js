@@ -34,4 +34,3 @@ MonthMode.propTypes = {
 };
 
 export default MonthMode;
-export { MonthMode };

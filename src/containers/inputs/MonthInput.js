@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { CustomPopup as Popup } from '../';
 import { getUnhandledProps } from '../../lib';
-import { MONTH_INPUT } from '../../lib/COMPONENT_TYPES.js';
+import { MONTH_INPUT } from '../../lib/COMPONENT_TYPES';
 import { MonthPickerComponent } from '../../components';
 
 class MonthInput extends React.Component {
@@ -85,4 +85,3 @@ MonthInput.defaultProps = {
 };
 
 export default MonthInput;
-export { MonthInput };

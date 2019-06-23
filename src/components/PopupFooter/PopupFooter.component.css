@@ -1,0 +1,19 @@
+.p-edit-content__footer--wrapper {
+  display: flex;
+}
+
+.p-edit-content__footer--button {
+  flex: 1;
+  cursor: pointer;
+  padding: 11px;
+}
+
+.p-edit-content__footer--button:hover {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #8AB4D4;
+}
+
+.p-edit-content__footer {
+  padding: 0px !important;
+}

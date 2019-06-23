@@ -84,7 +84,8 @@ class MinutePicker extends Component {
               onClick={this._onButtonClick}
               className="suir-calendar date"
             >
-              <Icon name="calendar" />Day
+              <Icon name="calendar" />
+              Day
             </Table.Cell>
           </Table.Row>
         )}
@@ -104,4 +105,3 @@ MinutePicker.propTypes = {
 };
 
 export default MinutePicker;
-export { MinutePicker };

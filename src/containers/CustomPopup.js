@@ -12,4 +12,3 @@ const CustomPopup = props => (
 );
 
 export default CustomPopup;
-export { CustomPopup };

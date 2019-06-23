@@ -43,4 +43,3 @@ MonthPickerComponent.propTypes = {
 };
 
 export default MonthPickerComponent;
-export { MonthPickerComponent };

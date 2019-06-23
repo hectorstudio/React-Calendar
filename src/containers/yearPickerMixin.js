@@ -1,6 +1,6 @@
-import React from 'react';
+import { Component } from 'react';
 
-class YearPickerMixin extends React.Component {
+class YearPickerMixin extends Component {
   onNextBtnClick = () => {
     this.setState(({ yearsStart }) => {
       return { yearsStart: yearsStart + 12 };
@@ -23,4 +23,3 @@ class YearPickerMixin extends React.Component {
 }
 
 export default YearPickerMixin;
-export { YearPickerMixin };

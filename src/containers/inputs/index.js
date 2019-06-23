@@ -1,7 +1,17 @@
-export { DateInput } from './DateInput.js';
-export { DateTimeInput } from './DateTimeInput.js';
-export { DatesRangeInput } from './DatesRangeInput.js';
-export { TimeInput } from './TimeInput.js';
-export { YearInput } from './YearInput.js';
-export { MonthInput } from './MonthInput.js';
-export { CustomDatesRangeInput } from './CustomDatesRangeInput';
+import DateInput from './DateInput';
+import DateTimeInput from './DateTimeInput/DateTimeInput.container';
+import DatesRangeInput from './DatesRangeInput';
+import TimeInput from './TimeInput';
+import YearInput from './YearInput';
+import MonthInput from './MonthInput';
+import CustomDatesRangeInput from './CustomDatesRangeInput';
+
+export {
+  DateInput,
+  DateTimeInput,
+  DatesRangeInput,
+  TimeInput,
+  YearInput,
+  MonthInput,
+  CustomDatesRangeInput,
+};

@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import invoke from 'lodash/invoke';
 
-import { CustomPopup as Popup, YearPickerMixin } from '../';
+import YearPickerMixin from '../yearPickerMixin';
+import { CustomPopup as Popup } from '../';
 import { getUnhandledProps } from '../../lib';
 import { YEAR_INPUT } from '../../lib/COMPONENT_TYPES';
 import { PickerHeader, YearPickerComponent } from '../../components';
@@ -100,4 +101,3 @@ YearInput.defaultProps = {
 };
 
 export default YearInput;
-export { YearInput };

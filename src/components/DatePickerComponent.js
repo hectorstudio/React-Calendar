@@ -11,8 +11,8 @@ import {
   getUnhandledProps,
 } from '../lib';
 
-import PopupFooter from './PopupFooter';
-import DatePickerCell from './DatePickerCell.js';
+import PopupFooter from './PopupFooter/PopupFooter.component';
+import DatePickerCell from './DatePickerCell';
 
 class DatePickerComponent extends Component {
   _getRow = (week, key) => {
@@ -86,4 +86,3 @@ DatePickerComponent.defaultProps = {
   shouldShowTimeButton: false,
 };
 export default DatePickerComponent;
-export { DatePickerComponent };

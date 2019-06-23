@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Input } from 'semantic-ui-react';
 
-import { dispatchDateChange } from '../lib/events.js';
+import { dispatchDateChange } from '../lib/events';
 
 class CustomInput extends React.Component {
   componentDidUpdate(prevProps) {
@@ -19,4 +19,3 @@ CustomInput.propTypes = {
 };
 
 export default CustomInput;
-export { CustomInput };

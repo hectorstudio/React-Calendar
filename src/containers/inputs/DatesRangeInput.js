@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { getUnhandledProps } from '../../lib';
 import { DATES_RANGE_INPUT } from '../../lib/COMPONENT_TYPES';
-import { DatesRangePickerContent } from '../../components/pickerContent/DatesRangePickerContent.js';
+import DatesRangePickerContent from '../../components/pickerContent/DatesRangePickerContent';
 import {
   CustomPopup as Popup,
   CustomInput as Input,
@@ -100,4 +100,3 @@ DatesRangeInput.defaultProps = {
 const WrappedDatesRangeInput = withStateInput(DatesRangeInput);
 
 export default WrappedDatesRangeInput;
-export { WrappedDatesRangeInput as DatesRangeInput };

@@ -8,10 +8,10 @@ import {
   CustomPopup as Popup,
   CustomInput as Input,
   withStateInput,
-  YearPickerMixin,
-} from '../';
-import { DATE_TIME_INPUT } from '../../lib/COMPONENT_TYPES.js';
-import { DateTimePickerContent } from '../../components/pickerContent/DateTimePickerContent.js';
+} from '../..';
+import YearPickerMixin from '../../yearPickerMixin';
+import { DATE_TIME_INPUT } from '../../../lib/COMPONENT_TYPES';
+import DateTimePickerContent from '../../../components/pickerContent/DateTimePickerContent';
 
 const validateDate = (date, dateFormat, onValidateError, onValidated) => {
   const mmDate = moment(trim(date), dateFormat, true);
@@ -47,7 +47,6 @@ class DateTimeInput extends YearPickerMixin {
 
   getPicker() {
     const {
-      // dateToShow,
       dateTimeValue,
       activeHour,
       activeMinute,
@@ -152,7 +151,6 @@ class DateTimeInput extends YearPickerMixin {
     } = this.props;
 
     const { dateTimeValue, isOpenPopup } = this.state;
-
     const inputElement = (
       <Input
         className={className}
@@ -226,4 +224,3 @@ DateTimeInput.defaultProps = {
 const WrappedDateTimeInput = withStateInput(DateTimeInput);
 
 export default WrappedDateTimeInput;
-export { WrappedDateTimeInput as DateTimeInput };
