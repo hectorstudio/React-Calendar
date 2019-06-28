@@ -21,8 +21,8 @@ const DatePickerContent = ({
   onPrevBtnClick,
   onNextBtnClick,
   switchMode,
-  shouldShowTimeButton,
   closePopup,
+  inputType,
 }) => {
   if (mode === 'year') {
     const value =
@@ -35,8 +35,9 @@ const DatePickerContent = ({
         onNextBtnClick={onNextBtnClick}
         onYearClick={onYearChange}
         value={value}
-        shouldShowClosePopupButton={true}
         closePopup={closePopup}
+        inputType={inputType}
+        switchMode={switchMode}
       />
     );
   }
@@ -48,8 +49,9 @@ const DatePickerContent = ({
         showPrevYear={showPrevYear}
         dateToShow={dateToShow}
         onMonthChange={onMonthChange}
-        shouldShowClosePopupButton={true}
         closePopup={closePopup}
+        inputType={inputType}
+        switchMode={switchMode}
       />
     );
   }
@@ -62,9 +64,8 @@ const DatePickerContent = ({
       onDateClick={onDateClick}
       activeDate={activeDate}
       switchMode={switchMode}
-      shouldShowTimeButton={shouldShowTimeButton}
-      shouldShowClosePopupButton={true}
       closePopup={closePopup}
+      inputType={inputType}
     />
   );
 };
@@ -84,8 +85,8 @@ DatePickerContent.propTypes = {
   yearsRange: PropTypes.object,
   onPrevBtnClick: PropTypes.func,
   onNextBtnClick: PropTypes.func,
-  shouldShowTimeButton: PropTypes.bool,
   switchMode: PropTypes.func,
+  inputType: PropTypes.string,
   closePopup: PropTypes.func,
 };
 export default DatePickerContent;

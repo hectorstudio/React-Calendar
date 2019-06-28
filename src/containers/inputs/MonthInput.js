@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Input, Table } from 'semantic-ui-react';
 import invoke from 'lodash/invoke';
 import PropTypes from 'prop-types';
 
-import { CustomPopup as Popup } from '../';
+import { CustomPopup } from '../';
 import { getUnhandledProps } from '../../lib';
 import { MONTH_INPUT } from '../../lib/COMPONENT_TYPES';
-import { MonthPickerComponent } from '../../components';
+import { MonthPickerPopup } from '../../components';
 
-class MonthInput extends React.Component {
+class MonthInput extends Component {
   static META = {
     type: MONTH_INPUT,
     name: 'MonthInput',
@@ -27,12 +27,13 @@ class MonthInput extends React.Component {
 
   getPicker() {
     const rest = getUnhandledProps(MonthInput, this.props);
-    const { value } = this.props;
+    const { value, inputType } = this.props;
     return (
       <Table {...rest} unstackable celled textAlign="center">
-        <MonthPickerComponent
+        <MonthPickerPopup
           onMonthClick={this.onMonthClick}
           activeMonth={value}
+          inputType={inputType}
         />
       </Table>
     );
@@ -50,9 +51,13 @@ class MonthInput extends React.Component {
       return this.getPicker();
     }
     return (
-      <Popup position={popupPosition} trigger={inputElement}>
+      <CustomPopup
+        position={popupPosition}
+        trigger={inputElement}
+        inputType="month"
+      >
         {this.getPicker()}
-      </Popup>
+      </CustomPopup>
     );
   }
 }
@@ -77,6 +82,7 @@ MonthInput.propTypes = {
   ]),
   inline: PropTypes.bool,
   value: PropTypes.string,
+  inputType: PropTypes.string,
 };
 
 MonthInput.defaultProps = {

@@ -234,37 +234,51 @@ function withStateInput(WrappedComponent) {
 
     onYearChange = (event, data) => {
       ///////////////////////////////////
-      const { onDateTimeChange, dateTimeValue } = this.props;
-      const nextDateTime = moment(dateTimeValue);
-      nextDateTime.year(data.value);
-      if (onDateTimeChange) onDateTimeChange(nextDateTime);
-      ///////////////////////////////////
-
-      const date = {
-        year: data.value,
-      };
-      this.setState({
-        dateToShow: moment(date),
-        year: data.value,
+      const { onDateTimeChange, dateTimeValue, value, onChange } = this.props;
+      const nextDateTime = onDateTimeChange
+        ? moment(dateTimeValue)
+        : moment(value);
+      const year = data.value;
+      nextDateTime.year(year);
+      if (onDateTimeChange) {
+        onDateTimeChange(nextDateTime);
+      } else {
+        if (onChange) onChange(nextDateTime);
+      }
+      tick(() => {
+        const date = {
+          year: data.value,
+        };
+        this.setState({
+          dateToShow: moment(date),
+          year: data.value,
+        });
       });
       this.switchToNextMode();
     };
 
     onMonthChange = (event, data) => {
-      ///////////////////////////////////
-      const { onDateTimeChange, dateTimeValue } = this.props;
-      const nextDateTime = moment(dateTimeValue);
-      nextDateTime.month(monthIndex(data.value));
-      if (onDateTimeChange) onDateTimeChange(nextDateTime);
-      ///////////////////////////////////
+      const { onDateTimeChange, dateTimeValue, onChange, value } = this.props;
+      const nextDateTime = onDateTimeChange
+        ? moment(dateTimeValue)
+        : moment(value);
+      const month = monthIndex(data.value);
+      nextDateTime.month(month);
 
-      const date = {
-        year: this.state.year,
-        month: monthIndex(data.value),
-      };
-      this.setState({
-        dateToShow: moment(date),
-        month: data.value,
+      if (onDateTimeChange) {
+        onDateTimeChange(nextDateTime);
+      } else {
+        if (onChange) onChange(nextDateTime);
+      }
+      tick(() => {
+        const date = {
+          year: this.state.year,
+          month: monthIndex(data.value),
+        };
+        this.setState({
+          dateToShow: moment(date),
+          month: data.value,
+        });
       });
       this.switchToNextMode();
     };

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { PickerHeader, TimePickerComponent } from '../';
+import { PickerHeader, TimePickerPopup } from '../';
 
 import DatePickerContent from './DatePickerContent';
 
@@ -29,8 +29,6 @@ const DateTimePickerContent = ({
   onNextBtnClick,
   switchMode,
   closePopup,
-  shouldShowTimeButton,
-  shouldShowDayButton,
 }) => {
   const headerWidth = mode === 'minute' ? '3' : mode === 'hour' ? '4' : '7';
   if (mode !== 'hour' && mode !== 'minute') {
@@ -51,8 +49,8 @@ const DateTimePickerContent = ({
         onPrevBtnClick={onPrevBtnClick}
         onNextBtnClick={onNextBtnClick}
         switchMode={switchMode}
-        shouldShowTimeButton={shouldShowTimeButton}
         closePopup={closePopup}
+        inputType="dateTime"
       />
     );
   }
@@ -66,14 +64,15 @@ const DateTimePickerContent = ({
         includeDay
         width={headerWidth}
       />
-      <TimePickerComponent
+      <TimePickerPopup
         mode={mode}
         activeHour={activeHour}
         activeMinute={activeMinute}
         onHourClick={onHourClick}
         onMinuteClick={onMinuteClick}
         switchMode={switchMode}
-        shouldShowDayButton={shouldShowDayButton}
+        closePopup={closePopup}
+        inputType="dateTime"
       />
     </React.Fragment>
   );
@@ -103,7 +102,5 @@ DateTimePickerContent.propTypes = {
   onNextBtnClick: PropTypes.func,
   switchMode: PropTypes.func,
   closePopup: PropTypes.func,
-  shouldShowDayButton: PropTypes.bool,
-  shouldShowTimeButton: PropTypes.bool,
 };
 export default DateTimePickerContent;

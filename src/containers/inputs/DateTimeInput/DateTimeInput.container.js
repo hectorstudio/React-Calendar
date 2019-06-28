@@ -16,10 +16,10 @@ import DateTimePickerContent from '../../../components/pickerContent/DateTimePic
 const validateDate = (date, dateFormat, onValidateError, onValidated) => {
   const mmDate = moment(trim(date), dateFormat, true);
   if (mmDate.isValid()) {
-    onValidated();
+    if (onValidated) onValidated();
     return mmDate;
   }
-  onValidateError();
+  if (onValidateError) onValidateError();
 };
 
 class DateTimeInput extends YearPickerMixin {
@@ -92,8 +92,6 @@ class DateTimeInput extends YearPickerMixin {
           onPrevBtnClick={this.onPrevBtnClick}
           onNextBtnClick={this.onNextBtnClick}
           switchMode={switchMode}
-          shouldShowTimeButton={true}
-          shouldShowDayButton={true}
           closePopup={this._handleClosePopup}
         />
       </Table>
@@ -176,6 +174,7 @@ class DateTimeInput extends YearPickerMixin {
         onClose={this._handleClosePopup}
         onOpen={this._handleOpenPopup}
         on="click"
+        inputType="dateTime"
       >
         {this.getPicker()}
       </Popup>

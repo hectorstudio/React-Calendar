@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Modal, Button, Popup } from 'semantic-ui-react';
+import { Button, Popup } from 'semantic-ui-react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
 
@@ -41,54 +41,48 @@ class App extends Component {
     const { customDateRanges, date, dateTime, message } = this.state;
 
     return (
-      <Modal
-        className="calendar-modal"
-        as={Form}
-        trigger={<Button>Open</Button>}
-      >
-        <Modal.Content>
-          <div>{message}</div>
-          <CustomDatesRangeInput
-            dateFormat="DD-MM-YYYY"
-            onValidateError={this._onValidateError}
-            onValidated={this._onValidated}
-            placeholder="From - To"
-            className="example-calendar-input"
-            name="datesRange"
-            iconPosition="left"
-            datesRange={customDateRanges}
-            onRangeChange={this._onRangeChange}
-          />
-          <DateInput
-            dateFormat="DD-MM-YYYY"
-            placeholder="From"
-            className="example-calendar-input"
-            name="dateInput"
-            iconPosition="left"
-            value={date}
-            onValidateError={this._onValidateError}
-            onValidated={this._onValidated}
-            onChange={this._onDateChange}
-            nullMessage="No Expired Date"
-          />
-          <DateTimeInput
-            dateTimeFormat="DD-MM-YYYY hh:mm:ss A"
-            placeholder="From"
-            className="example-calendar-input"
-            name="dateTimeInput"
-            iconPosition="left"
-            dateTimeValue={dateTime}
-            onValidateError={this._onValidateError}
-            onValidated={this._onValidated}
-            onDateTimeChange={this._onDateTimeChange}
-            nullMessage="No Expired Date"
-          />
-          <Popup
-            content="Add users to your feed"
-            trigger={<Button icon="add" />}
-          />
-        </Modal.Content>
-      </Modal>
+      <>
+        <div>{message}</div>
+        <CustomDatesRangeInput
+          dateFormat="DD-MM-YYYY"
+          onValidateError={this._onValidateError}
+          onValidated={this._onValidated}
+          placeholder="From - To"
+          className="example-calendar-input"
+          name="datesRange"
+          iconPosition="left"
+          datesRange={customDateRanges}
+          onRangeChange={this._onRangeChange}
+        />
+        <DateInput
+          dateFormat="DD-MM-YYYY"
+          placeholder="From"
+          className="example-calendar-input"
+          name="dateInput"
+          iconPosition="left"
+          value={date}
+          onValidateError={this._onValidateError}
+          onValidated={this._onValidated}
+          onChange={this._onDateChange}
+          nullMessage="No Expired Date"
+        />
+        <DateTimeInput
+          dateTimeFormat="DD-MM-YYYY hh:mm:ss A"
+          placeholder="From"
+          className="example-calendar-input"
+          name="dateTimeInput"
+          iconPosition="left"
+          dateTimeValue={dateTime}
+          onValidateError={this._onValidateError}
+          onValidated={this._onValidated}
+          onDateTimeChange={this._onDateTimeChange}
+          nullMessage="No Expired Date"
+        />
+        <Popup
+          content="Add users to your feed"
+          trigger={<Button icon="add" />}
+        />
+      </>
     );
   }
 }

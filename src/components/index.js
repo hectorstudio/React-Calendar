@@ -1,17 +1,17 @@
-import DatePickerComponent from './DatePickerComponent';
-import TimePickerComponent from './TimePickerComponent';
-import HourPicker from './HourPicker';
-import MinutePicker from './MinutePicker';
-import YearPickerComponent from './YearPickerComponent';
-import MonthPickerComponent from './MonthPickerComponent';
+import DayPickerPopup from './popups/DayPickerPopup';
+import TimePickerPopup from './popups/TimePickerPopup';
+import HourPickerPopup from './popups/HourPickerPopup';
+import MinutePickerPopup from './popups/MinutePickerPopup';
+import YearPickerPopup from './popups/YearPickerPopup';
+import MonthPickerPopup from './popups/MonthPickerPopup';
 import PickerHeader from './PickerHeader';
 
 export {
-  DatePickerComponent,
-  TimePickerComponent,
-  HourPicker,
-  MinutePicker,
-  YearPickerComponent,
-  MonthPickerComponent,
+  DayPickerPopup,
+  TimePickerPopup,
+  HourPickerPopup,
+  MinutePickerPopup,
+  YearPickerPopup,
+  MonthPickerPopup,
   PickerHeader,
 };

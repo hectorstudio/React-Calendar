@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Table, Icon } from 'semantic-ui-react';
+import { Table } from 'semantic-ui-react';
 import map from 'lodash/map';
 import forEach from 'lodash/forEach';
 
-import { getUnhandledProps } from '../lib';
-
-import MinutePickerCell from './MinutePickerCell';
+import { getUnhandledProps } from '../../lib';
+import MinutePickerCell from '../cells/MinutePickerCell';
+import PopupFooter from '../PopupFooter/PopupFooter.component';
 
 const MINUTES = [
   '00',
@@ -23,7 +23,7 @@ const MINUTES = [
   '55',
 ];
 
-class MinutePicker extends Component {
+class MinutePickerPopup extends Component {
   _getRows = minutes => {
     const rows = [];
     let rowIndex = 0;
@@ -47,14 +47,20 @@ class MinutePicker extends Component {
       switchMode('day');
     }, 0);
   };
+  _onMinutePickerClicked = (event, data) => {
+    const { onMinuteClick, inputType, closePopup } = this.props;
+    onMinuteClick(event, data);
+    if (inputType === 'dateTime') closePopup();
+  };
   render() {
     const {
-      onMinuteClick,
       hour,
       activeMinute,
-      shouldShowDayButton,
+      closePopup,
+      switchMode,
+      inputType,
     } = this.props;
-    const rest = getUnhandledProps(MinutePicker, this.props);
+    const rest = getUnhandledProps(MinutePickerPopup, this.props);
     const cellStyle = {
       width: '33.33333%',
       minWidth: '8em',
@@ -62,7 +68,7 @@ class MinutePicker extends Component {
     const minutes = map(MINUTES, minute => (
       <MinutePickerCell
         style={cellStyle}
-        onClick={onMinuteClick}
+        onClick={this._onMinutePickerClicked}
         active={minute === activeMinute}
         hour={hour}
         minute={minute}
@@ -74,34 +80,28 @@ class MinutePicker extends Component {
     ));
 
     return (
-      <Table.Body {...rest}>
-        {rows}
-        {shouldShowDayButton && (
-          <Table.Row>
-            <Table.Cell
-              colSpan="7"
-              style={{ cursor: 'pointer' }}
-              onClick={this._onButtonClick}
-              className="suir-calendar date"
-            >
-              <Icon name="calendar" />
-              Day
-            </Table.Cell>
-          </Table.Row>
-        )}
-      </Table.Body>
+      <>
+        <Table.Body {...rest}>{rows}</Table.Body>
+        <PopupFooter
+          inputType={inputType}
+          switchMode={switchMode}
+          closePopup={closePopup}
+          pickerName="Minute"
+        />
+      </>
     );
   }
 }
 
-MinutePicker.propTypes = {
+MinutePickerPopup.propTypes = {
   /** (event, data) => {} */
   onMinuteClick: PropTypes.func.isRequired,
   /** 'hh' */
   hour: PropTypes.string.isRequired,
   activeMinute: PropTypes.string,
-  shouldShowDayButton: PropTypes.bool,
   switchMode: PropTypes.func,
+  closePopup: PropTypes.func,
+  inputType: PropTypes.string,
 };
 
-export default MinutePicker;
+export default MinutePickerPopup;

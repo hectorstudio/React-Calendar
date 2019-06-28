@@ -4,11 +4,7 @@ import PropTypes from 'prop-types';
 import trim from 'lodash/trim';
 import moment from 'moment';
 
-import {
-  CustomPopup as Popup,
-  CustomInput as Input,
-  withStateInput,
-} from '../';
+import { CustomPopup, CustomInput, withStateInput } from '../';
 import YearPickerMixin from '../yearPickerMixin';
 import { DATE_INPUT } from '../../lib/COMPONENT_TYPES';
 import DatePickerContent from '../../components/pickerContent/DatePickerContent';
@@ -16,10 +12,10 @@ import DatePickerContent from '../../components/pickerContent/DatePickerContent'
 const validateDate = (date, dateFormat, onValidateError, onValidated) => {
   const mmDate = moment(trim(date), dateFormat, true);
   if (mmDate.isValid()) {
-    onValidated();
+    if (onValidated) onValidated();
     return mmDate;
   }
-  onValidateError();
+  if (onValidateError) onValidateError();
 };
 
 class DateInput extends YearPickerMixin {
@@ -66,6 +62,7 @@ class DateInput extends YearPickerMixin {
       activeDate,
       handleHeaderDateClick,
       mode,
+      switchMode,
     } = this.props;
     return (
       <Table unstackable celled textAlign="center">
@@ -86,6 +83,8 @@ class DateInput extends YearPickerMixin {
           onNextBtnClick={this.onNextBtnClick}
           setDatesRange={setDatesRange}
           closePopup={this._handleClosePopup}
+          switchMode={switchMode}
+          inputType="date"
         />
       </Table>
     );
@@ -124,7 +123,7 @@ class DateInput extends YearPickerMixin {
     const { dateValue, isOpenPopup } = this.state;
 
     const inputElement = (
-      <Input
+      <CustomInput
         className={className}
         iconPosition={iconPosition}
         mode={mode}
@@ -141,16 +140,17 @@ class DateInput extends YearPickerMixin {
       return this.getPicker();
     }
     return (
-      <Popup
+      <CustomPopup
         position={popupPosition}
         trigger={inputElement}
         open={isOpenPopup}
         onClose={this._handleClosePopup}
         onOpen={this._handleOpenPopup}
         on="click"
+        inputType="date"
       >
         {this.getPicker()}
-      </Popup>
+      </CustomPopup>
     );
   }
 }

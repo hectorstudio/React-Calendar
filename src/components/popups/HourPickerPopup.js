@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Table, Icon } from 'semantic-ui-react';
+import { Table } from 'semantic-ui-react';
 import map from 'lodash/map';
 import forEach from 'lodash/forEach';
 
-import { getUnhandledProps } from '../lib';
-
-import HourPickerCell from './HourPickerCell';
+import { getUnhandledProps } from '../../lib';
+import HourPickerCell from '../cells/HourPickerCell';
+import PopupFooter from '../PopupFooter/PopupFooter.component';
 
 const HOURS = [
   '00',
@@ -35,7 +35,7 @@ const HOURS = [
   '23',
 ];
 
-class HourPicker extends Component {
+class HourPickerPopup extends Component {
   _getRows = hours => {
     const rows = [];
     let rowIndex = 0;
@@ -59,8 +59,14 @@ class HourPicker extends Component {
     }, 0);
   };
   render() {
-    const { onHourClick, activeHour, shouldShowDayButton } = this.props;
-    const rest = getUnhandledProps(HourPicker, this.props);
+    const {
+      onHourClick,
+      activeHour,
+      closePopup,
+      switchMode,
+      inputType,
+    } = this.props;
+    const rest = getUnhandledProps(HourPickerPopup, this.props);
 
     const hours = map(HOURS, hour => (
       <HourPickerCell
@@ -74,32 +80,26 @@ class HourPicker extends Component {
       <Table.Row key={i}>{row}</Table.Row>
     ));
     return (
-      <Table.Body {...rest}>
-        {rows}
-        {shouldShowDayButton && (
-          <Table.Row>
-            <Table.Cell
-              colSpan="7"
-              style={{ cursor: 'pointer' }}
-              onClick={this._onButtonClick}
-              className="suir-calendar date"
-            >
-              <Icon name="calendar" />
-              Day
-            </Table.Cell>
-          </Table.Row>
-        )}
-      </Table.Body>
+      <>
+        <Table.Body {...rest}>{rows}</Table.Body>
+        <PopupFooter
+          inputType={inputType}
+          switchMode={switchMode}
+          closePopup={closePopup}
+          pickerName="Hour"
+        />
+      </>
     );
   }
 }
 
-HourPicker.propTypes = {
+HourPickerPopup.propTypes = {
   /** (event, data) => {} */
   onHourClick: PropTypes.func.isRequired,
   activeHour: PropTypes.string,
-  shouldShowDayButton: PropTypes.bool,
+  inputType: PropTypes.string,
   switchMode: PropTypes.func,
+  closePopup: PropTypes.func,
 };
 
-export default HourPicker;
+export default HourPickerPopup;

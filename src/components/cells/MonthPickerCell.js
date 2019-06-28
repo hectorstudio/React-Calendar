@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Table } from 'semantic-ui-react';
 
-import { getUnhandledProps } from '../lib';
+import { getUnhandledProps } from '../../lib';
 
 class MonthPickerCell extends Component {
   _onMonthClick = event => {

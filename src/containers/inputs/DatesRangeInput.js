@@ -5,11 +5,7 @@ import PropTypes from 'prop-types';
 import { getUnhandledProps } from '../../lib';
 import { DATES_RANGE_INPUT } from '../../lib/COMPONENT_TYPES';
 import DatesRangePickerContent from '../../components/pickerContent/DatesRangePickerContent';
-import {
-  CustomPopup as Popup,
-  CustomInput as Input,
-  withStateInput,
-} from '../';
+import { CustomPopup, CustomInput, withStateInput } from '../';
 
 class DatesRangeInput extends React.Component {
   static META = {
@@ -36,6 +32,7 @@ class DatesRangeInput extends React.Component {
           dateToShow={dateToShow}
           datesRange={datesRange}
           setDatesRange={setDatesRange}
+          inputType="datesRange"
         />
       </Table>
     );
@@ -45,14 +42,16 @@ class DatesRangeInput extends React.Component {
     const { onChange, icon, popupPosition, inline } = this.props;
 
     const rest = getUnhandledProps(DatesRangeInput, this.props);
-    const inputElement = <Input {...rest} onChange={onChange} icon={icon} />;
+    const inputElement = (
+      <CustomInput {...rest} onChange={onChange} icon={icon} />
+    );
     if (inline) {
       return this.getPicker();
     }
     return (
-      <Popup position={popupPosition} trigger={inputElement}>
+      <CustomPopup position={popupPosition} trigger={inputElement}>
         {this.getPicker()}
-      </Popup>
+      </CustomPopup>
     );
   }
 }

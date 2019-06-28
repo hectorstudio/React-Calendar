@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import { Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -9,12 +9,11 @@ import {
   isDayInMonth,
   getArrayOfWeeks,
   getUnhandledProps,
-} from '../lib';
+} from '../../lib';
+import PopupFooter from '../PopupFooter/PopupFooter.component';
+import DatePickerCell from '../cells/DatePickerCell';
 
-import PopupFooter from './PopupFooter/PopupFooter.component';
-import DatePickerCell from './DatePickerCell';
-
-class DatePickerComponent extends Component {
+class DayPickerPopup extends Component {
   _getRow = (week, key) => {
     const {
       setDatesRange,
@@ -39,34 +38,34 @@ class DatePickerComponent extends Component {
     });
     return <Table.Row key={key}>{days}</Table.Row>;
   };
+  _onDayPickerClicked = (event, data) => {
+    const { onDateClick, setDatesRange, inputType, closePopup } = this.props;
+    const handler = setDatesRange || onDateClick;
+    handler(event, data);
+    if (inputType === 'day') closePopup();
+  };
   _getTableContent = weeks => {
     return map(weeks, week => this._getRow(week, week[0].format('YYYY-MM-DD')));
   };
   render() {
-    const {
-      showedMonth,
-      shouldShowTimeButton,
-      closePopup,
-      switchMode,
-      shouldShowClosePopupButton,
-    } = this.props;
-    const rest = getUnhandledProps(DatePickerComponent, this.props);
+    const { showedMonth, closePopup, switchMode, inputType } = this.props;
+    const rest = getUnhandledProps(DayPickerPopup, this.props);
     const data = getArrayOfWeeks(showedMonth);
     return (
-      <Fragment>
+      <>
         <Table.Body {...rest}>{this._getTableContent(data)}</Table.Body>
         <PopupFooter
-          shouldShowTimeButton={shouldShowTimeButton}
-          shouldShowClosePopupButton={shouldShowClosePopupButton}
+          inputType={inputType}
           switchMode={switchMode}
           closePopup={closePopup}
+          pickerName="Day"
         />
-      </Fragment>
+      </>
     );
   }
 }
 
-DatePickerComponent.propTypes = {
+DayPickerPopup.propTypes = {
   /** (event, data) => { do something } */
   setDatesRange: PropTypes.func,
   onDateClick: PropTypes.func,
@@ -78,11 +77,8 @@ DatePickerComponent.propTypes = {
   datesRange: PropTypes.object,
   switchMode: PropTypes.func,
   closePopup: PropTypes.func,
-  shouldShowTimeButton: PropTypes.bool,
-  shouldShowClosePopupButton: PropTypes.bool,
+  inputType: PropTypes.string,
 };
 
-DatePickerComponent.defaultProps = {
-  shouldShowTimeButton: false,
-};
-export default DatePickerComponent;
+DayPickerPopup.defaultProps = {};
+export default DayPickerPopup;

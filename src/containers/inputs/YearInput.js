@@ -5,10 +5,10 @@ import moment from 'moment';
 import invoke from 'lodash/invoke';
 
 import YearPickerMixin from '../yearPickerMixin';
-import { CustomPopup as Popup } from '../';
+import { CustomPopup } from '../';
 import { getUnhandledProps } from '../../lib';
 import { YEAR_INPUT } from '../../lib/COMPONENT_TYPES';
-import { PickerHeader, YearPickerComponent } from '../../components';
+import { PickerHeader, YearPickerPopup } from '../../components';
 
 class YearInput extends YearPickerMixin {
   static META = {
@@ -40,7 +40,7 @@ class YearInput extends YearPickerMixin {
           onPrevBtnClick={this.onPrevBtnClick}
           onNextBtnClick={this.onNextBtnClick}
         />
-        <YearPickerComponent
+        <YearPickerPopup
           onYearClick={this.onYearClick}
           activeYear={this.props.value}
           yearsStart={yearsRange.start}
@@ -67,9 +67,13 @@ class YearInput extends YearPickerMixin {
       return this.getPicker();
     }
     return (
-      <Popup position={popupPosition} trigger={inputElement}>
+      <CustomPopup
+        position={popupPosition}
+        trigger={inputElement}
+        inputType="year"
+      >
         {this.getPicker()}
-      </Popup>
+      </CustomPopup>
     );
   }
 }
