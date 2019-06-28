@@ -4,7 +4,7 @@ import ClassNames from 'classnames';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-import { getUnhandledProps } from '../lib';
+import { getUnhandledProps } from '../../lib';
 
 class DatePickerCell extends Component {
   onCellClick = event => {

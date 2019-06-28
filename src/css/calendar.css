@@ -26,16 +26,45 @@
 }
 
 .right-column-button-wrapper {
-  padding: 3px;
-  margin-left: 10px;
+  margin-right: 10px;
   margin-top: 6px;
 }
 
 .footer-button {
-  cursor: 'pointer';
+  cursor: "pointer";
 }
 
 .suir-calendar .row {
   margin-left: 0px !important;
   margin-right: 0px !important;
+}
+
+.p-edit-content__footer--wrapper {
+  display: flex;
+}
+
+.p-edit-content__footer--button {
+  flex: 1;
+  cursor: pointer;
+  padding: 11px;
+  display: flex;
+}
+
+.p-edit-content__footer--button--active {
+  color: red !important;
+}
+
+.p-edit-content__footer--button:hover {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #8ab4d4;
+}
+
+.p-edit-content__footer {
+  padding: 0px !important;
+}
+
+.p-edit-content__footer--button__icon,
+.p-edit-content__footer--button__name {
+  flex: 1;
 }

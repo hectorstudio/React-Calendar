@@ -5,9 +5,9 @@ import fill from 'lodash/fill';
 import map from 'lodash/map';
 import chunk from 'lodash/chunk';
 
-import { getUnhandledProps } from '../lib';
-
-import YearPickerCell from './YearPickerCell';
+import { getUnhandledProps } from '../../lib';
+import YearPickerCell from '../cells/YearPickerCell';
+import PopupFooter from '../PopupFooter/PopupFooter.component';
 
 /** Return array of 12 years as strings 'YYYY'.
  * @param {number} yearsStart */
@@ -16,10 +16,17 @@ const getYears = yearsStart => {
   return map(fill(years, yearsStart), (year, i) => (year + i).toString());
 };
 
-class YearPickerComponent extends Component {
-  _getRest = () => getUnhandledProps(YearPickerComponent, this.props);
+class YearPickerPopup extends Component {
+  _getRest = () => getUnhandledProps(YearPickerPopup, this.props);
   render() {
-    const { onYearClick, activeYear, yearsStart } = this.props;
+    const {
+      onYearClick,
+      activeYear,
+      yearsStart,
+      closePopup,
+      switchMode,
+      inputType,
+    } = this.props;
     const rest = this._getRest();
     const cellStyle = {
       width: '33.333333%',
@@ -37,15 +44,28 @@ class YearPickerComponent extends Component {
     const rows = map(chunk(years, 3), (row, i) => (
       <Table.Row key={i}>{row}</Table.Row>
     ));
-    return <Table.Body {...rest}>{rows}</Table.Body>;
+    return (
+      <>
+        <Table.Body {...rest}>{rows}</Table.Body>
+        <PopupFooter
+          inputType={inputType}
+          switchMode={switchMode}
+          closePopup={closePopup}
+          pickerName="Year"
+        />
+      </>
+    );
   }
 }
 
-YearPickerComponent.propTypes = {
+YearPickerPopup.propTypes = {
   /** (event, data) => {} */
   onYearClick: PropTypes.func.isRequired,
   activeYear: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   yearsStart: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  switchMode: PropTypes.func,
+  closePopup: PropTypes.func,
+  inputType: PropTypes.string,
 };
 
-export default YearPickerComponent;
+export default YearPickerPopup;

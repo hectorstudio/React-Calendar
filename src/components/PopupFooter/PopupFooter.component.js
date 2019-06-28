@@ -1,57 +1,73 @@
 import React from 'react';
-import { Table, Icon } from 'semantic-ui-react';
+import { Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { compose, withHandlers } from 'recompose';
-import './PopupFooter.component.css';
 
-const PopupFooter = ({
-  shouldShowTimeButton,
-  shouldShowClosePopupButton,
-  onChangeModeButtonClicked,
-  // onClosePopupClicked,
-}) =>
-  (shouldShowClosePopupButton || shouldShowTimeButton) && (
+import PopupFooterChangeModeButton from '../PopupFooterChangeModeButton/PopupFooterChangeModeButton.component';
+
+const PopupFooter = ({ onChangeModeButtonClicked, pickerName, inputType }) => {
+  if (inputType === 'datesRange') return null;
+  return (
     <Table.Footer>
       <Table.Row>
-        {shouldShowTimeButton && (
-          <Table.Cell colSpan="16" className="p-edit-content__footer">
-            <div className="p-edit-content__footer--wrapper">
-              <div
-                role="presentation"
-                className="p-edit-content__footer--button"
-                onClick={onChangeModeButtonClicked('day')}
-              >
-                <Icon name="calendar" />
-                Day
-              </div>
-              <div
-                role="presentation"
-                className="p-edit-content__footer--button"
-                onClick={onChangeModeButtonClicked('hour')}
-              >
-                <Icon name="calendar times outline" />
-                Hour
-              </div>
-              <div
-                role="presentation"
-                className="p-edit-content__footer--button"
-                onClick={onChangeModeButtonClicked('minute')}
-              >
-                <Icon name="time" />
-                Minute
-              </div>
-            </div>
-          </Table.Cell>
-        )}
+        <Table.Cell colSpan="16" className="p-edit-content__footer">
+          <div className="p-edit-content__footer--wrapper">
+            {inputType === 'dateTime' && (
+              <>
+                <PopupFooterChangeModeButton
+                  changeMode={onChangeModeButtonClicked}
+                  mode="minute"
+                  name="Minute"
+                  title="Mi"
+                  icon="time"
+                  pickerName={pickerName}
+                />
+                <PopupFooterChangeModeButton
+                  changeMode={onChangeModeButtonClicked}
+                  mode="hour"
+                  name="Hour"
+                  icon="time"
+                  title="Hr"
+                  pickerName={pickerName}
+                />
+              </>
+            )}
+
+            <PopupFooterChangeModeButton
+              changeMode={onChangeModeButtonClicked}
+              mode="day"
+              name="Day"
+              icon="calendar"
+              title="Da"
+              pickerName={pickerName}
+            />
+            <PopupFooterChangeModeButton
+              changeMode={onChangeModeButtonClicked}
+              mode="month"
+              name="Month"
+              icon="calendar"
+              title="Mo"
+              pickerName={pickerName}
+            />
+            <PopupFooterChangeModeButton
+              changeMode={onChangeModeButtonClicked}
+              mode="year"
+              name="Year"
+              icon="calendar"
+              title="Yr"
+              pickerName={pickerName}
+            />
+          </div>
+        </Table.Cell>
       </Table.Row>
     </Table.Footer>
   );
+};
 
 PopupFooter.propTypes = {
-  shouldShowClosePopupButton: PropTypes.bool,
-  shouldShowTimeButton: PropTypes.bool,
+  inputType: PropTypes.string,
   onChangeModeButtonClicked: PropTypes.func,
-  onClosePopupClicked: PropTypes.func,
+  pickerName: PropTypes.string,
 };
 
 export default compose(

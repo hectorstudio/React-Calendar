@@ -4,11 +4,11 @@ import { Table } from 'semantic-ui-react';
 import map from 'lodash/map';
 import chunk from 'lodash/chunk';
 
-import { getUnhandledProps, getMonths } from '../lib';
+import { getUnhandledProps, getMonths } from '../../lib';
+import MonthPickerCell from '../cells/MonthPickerCell';
+import PopupFooter from '../PopupFooter/PopupFooter.component';
 
-import MonthPickerCell from './MonthPickerCell';
-
-class MonthPickerComponent extends Component {
+class MonthPickerPopup extends Component {
   _getRows = () => {
     const { onMonthClick, activeMonth } = this.props;
 
@@ -31,15 +31,29 @@ class MonthPickerComponent extends Component {
     return rows;
   };
   render() {
-    const rest = getUnhandledProps(MonthPickerComponent, this.props);
-    return <Table.Body {...rest}>{this._getRows()}</Table.Body>;
+    const { closePopup, switchMode, inputType } = this.props;
+    const rest = getUnhandledProps(MonthPickerPopup, this.props);
+    return (
+      <>
+        <Table.Body {...rest}>{this._getRows()}</Table.Body>
+        <PopupFooter
+          inputType={inputType}
+          switchMode={switchMode}
+          closePopup={closePopup}
+          pickerName="Month"
+        />
+      </>
+    );
   }
 }
 
-MonthPickerComponent.propTypes = {
+MonthPickerPopup.propTypes = {
   /** (event, data) => {} */
   onMonthClick: PropTypes.func.isRequired,
   activeMonth: PropTypes.string,
+  switchMode: PropTypes.func,
+  closePopup: PropTypes.func,
+  inputType: PropTypes.string,
 };
 
-export default MonthPickerComponent;
+export default MonthPickerPopup;

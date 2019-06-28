@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import { PickerHeader, MonthPickerComponent } from '../';
+import { PickerHeader, MonthPickerPopup } from '../';
 
 const MonthMode = ({
   handleHeaderDateClick,
@@ -9,6 +9,8 @@ const MonthMode = ({
   showPrevYear,
   dateToShow,
   onMonthChange,
+  inputType,
+  switchMode,
 }) => (
   <Fragment>
     <PickerHeader
@@ -18,9 +20,11 @@ const MonthMode = ({
       activeYear={dateToShow.format('YYYY')}
       width="3"
     />
-    <MonthPickerComponent
+    <MonthPickerPopup
+      switchMode={switchMode}
       activeMonth={dateToShow.format('MMM')}
       onMonthClick={onMonthChange}
+      inputType={inputType}
     />
   </Fragment>
 );
@@ -31,6 +35,8 @@ MonthMode.propTypes = {
   showPrevYear: PropTypes.func,
   onMonthChange: PropTypes.func,
   dateToShow: PropTypes.object,
+  inputType: PropTypes.string,
+  switchMode: PropTypes.func,
 };
 
 export default MonthMode;

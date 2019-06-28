@@ -112,6 +112,7 @@ class ControlledCustomPopup extends Component {
       <Popup
         trigger={trigger}
         flowing
+        fluid
         id="suirCalendarPopup"
         open={popupState}
         on="click"

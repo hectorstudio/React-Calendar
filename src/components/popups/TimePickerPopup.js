@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-import { HourPicker, MinutePicker, PickerHeader } from '.';
+import { HourPickerPopup, MinutePickerPopup, PickerHeader } from '..';
 
-const TimePickerComponent = ({
+const TimePickerPopup = ({
   selectedDate,
   onNextDayBtnClick,
   onPrevDayBtnClick,
@@ -13,12 +13,13 @@ const TimePickerComponent = ({
   activeHour,
   activeMinute,
   mode,
-  shouldShowDayButton,
   switchMode,
+  inputType,
+  closePopup,
 }) => {
   if (mode === 'minute') {
     return (
-      <React.Fragment>
+      <>
         {selectedDate && (
           <PickerHeader
             width="3"
@@ -28,18 +29,19 @@ const TimePickerComponent = ({
             onPrevBtnClick={onPrevDayBtnClick}
           />
         )}
-        <MinutePicker
+        <MinutePickerPopup
           hour={activeHour}
           activeMinute={activeMinute}
           onMinuteClick={onMinuteClick}
-          shouldShowDayButton={shouldShowDayButton}
           switchMode={switchMode}
+          inputType={inputType}
+          closePopup={closePopup}
         />
-      </React.Fragment>
+      </>
     );
   } else {
     return (
-      <React.Fragment>
+      <>
         {selectedDate && (
           <PickerHeader
             width="4"
@@ -49,18 +51,18 @@ const TimePickerComponent = ({
             onPrevBtnClick={onPrevDayBtnClick}
           />
         )}
-        <HourPicker
+        <HourPickerPopup
           activeHour={activeHour}
           onHourClick={onHourClick}
-          shouldShowDayButton={shouldShowDayButton}
           switchMode={switchMode}
+          inputType={inputType}
         />
-      </React.Fragment>
+      </>
     );
   }
 };
 
-TimePickerComponent.propTypes = {
+TimePickerPopup.propTypes = {
   /** (event, data) => {} */
   onHourClick: PropTypes.func.isRequired,
   /** (event, data) => {} */
@@ -75,8 +77,8 @@ TimePickerComponent.propTypes = {
   mode: PropTypes.string,
 };
 
-TimePickerComponent.defaultProps = {
+TimePickerPopup.defaultProps = {
   mode: 'hour',
 };
 
-export default TimePickerComponent;
+export default TimePickerPopup;

@@ -8,11 +8,7 @@ import moment from 'moment';
 
 import { DATES_RANGE_INPUT } from '../../lib/COMPONENT_TYPES';
 import DatesRangePickerContent from '../../components/pickerContent/DatesRangePickerContent';
-import {
-  ControlledCustomPopup as Popup,
-  CustomInput as Input,
-  withStateInput,
-} from '../';
+import { ControlledCustomPopup, CustomInput, withStateInput } from '../';
 
 const validateDatesRange = (date, dateFormat, onValidateError, onValidated) => {
   const splitData = split(date, ' - ');
@@ -20,11 +16,11 @@ const validateDatesRange = (date, dateFormat, onValidateError, onValidated) => {
     const start = moment(trim(splitData[0]), dateFormat, true);
     const end = moment(trim(splitData[1]), dateFormat, true);
     if (start.isValid() && end.isValid()) {
-      onValidated();
+      if (onValidated) onValidated();
       return { start, end };
     }
   }
-  onValidateError();
+  if (onValidateError) onValidateError();
 };
 
 class CustomDatesRangeInput extends Component {
@@ -65,6 +61,7 @@ class CustomDatesRangeInput extends Component {
       dateToShow,
       datesRange,
       setDatesRange,
+      switchMode,
     } = this.props;
     return (
       <Table unstackable celled textAlign="center">
@@ -75,6 +72,8 @@ class CustomDatesRangeInput extends Component {
           dateToShow={dateToShow}
           datesRange={datesRange}
           setDatesRange={setDatesRange}
+          inputType="datesRange"
+          switchMode={switchMode}
         />
       </Table>
     );
@@ -110,7 +109,7 @@ class CustomDatesRangeInput extends Component {
     const { datesRangeInputValue } = this.state;
 
     return (
-      <Input
+      <CustomInput
         className={className}
         iconPosition={iconPosition}
         mode={mode}
@@ -138,7 +137,7 @@ class CustomDatesRangeInput extends Component {
     return (
       <Toggle initial={false}>
         {({ on, setOff, setOn }) => (
-          <Popup
+          <ControlledCustomPopup
             position={popupPosition}
             trigger={this._getInput()}
             popupState={on}
@@ -146,9 +145,10 @@ class CustomDatesRangeInput extends Component {
             handleOpen={setOn}
             setDatesRange={setDatesRange}
             setStartEndDatesRange={setStartEndDatesRange}
+            inputType="datesRange"
           >
             {this.getPicker()}
-          </Popup>
+          </ControlledCustomPopup>
         )}
       </Toggle>
     );
@@ -191,6 +191,7 @@ CustomDatesRangeInput.propTypes = {
   iconPosition: PropTypes.string,
   mode: PropTypes.string,
   name: PropTypes.string,
+  switchMode: PropTypes.func,
   placeholder: PropTypes.string,
 };
 

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import { PickerHeader, YearPickerComponent } from '../';
+import { PickerHeader, YearPickerPopup } from '../';
 
 const YearMode = ({
   onHeaderDateClick,
@@ -10,6 +10,8 @@ const YearMode = ({
   onNextBtnClick,
   onYearClick,
   value,
+  switchMode,
+  inputType,
 }) => (
   <Fragment>
     <PickerHeader
@@ -19,10 +21,12 @@ const YearMode = ({
       onPrevBtnClick={onPrevBtnClick}
       onNextBtnClick={onNextBtnClick}
     />
-    <YearPickerComponent
+    <YearPickerPopup
       onYearClick={onYearClick}
       activeYear={value}
       yearsStart={yearsRange.start}
+      switchMode={switchMode}
+      inputType={inputType}
     />
   </Fragment>
 );
@@ -33,6 +37,8 @@ YearMode.propTypes = {
   onPrevBtnClick: PropTypes.func,
   onNextBtnClick: PropTypes.func,
   onYearClick: PropTypes.func,
+  switchMode: PropTypes.func,
   value: PropTypes.string,
+  inputType: PropTypes.string,
 };
 export default YearMode;

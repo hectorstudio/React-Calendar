@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { PickerHeader, DatePickerComponent } from '../';
+import { PickerHeader, DayPickerPopup } from '../';
 
 const DayMode = ({
   handleHeaderDateClick,
@@ -11,12 +11,11 @@ const DayMode = ({
   onDateClick,
   activeDate,
   switchMode,
-  shouldShowTimeButton,
-  shouldShowClosePopupButton,
   closePopup,
+  inputType,
 }) => {
   return (
-    <React.Fragment>
+    <>
       <PickerHeader
         onDateClick={handleHeaderDateClick}
         onNextBtnClick={showNextMonth}
@@ -25,16 +24,15 @@ const DayMode = ({
         showWeeks
         width="7"
       />
-      <DatePickerComponent
+      <DayPickerPopup
         onDateClick={onDateClick}
         activeDate={activeDate}
         showedMonth={dateToShow}
         switchMode={switchMode}
         closePopup={closePopup}
-        shouldShowTimeButton={shouldShowTimeButton}
-        shouldShowClosePopupButton={shouldShowClosePopupButton}
+        inputType={inputType}
       />
-    </React.Fragment>
+    </>
   );
 };
 
@@ -47,8 +45,7 @@ DayMode.propTypes = {
   activeDate: PropTypes.object,
   switchMode: PropTypes.func,
   closePopup: PropTypes.func,
-  shouldShowTimeButton: PropTypes.bool,
-  shouldShowClosePopupButton: PropTypes.bool,
+  inputType: PropTypes.string,
 };
 
 export default DayMode;

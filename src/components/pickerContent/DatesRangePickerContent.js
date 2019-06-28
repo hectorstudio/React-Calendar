@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { PickerHeader, DatePickerComponent } from '../';
+import { PickerHeader, DayPickerPopup } from '../';
 
-function DatesRangePickerContent(props) {
+const DatesRangePickerContent = props => {
   const {
     handleHeaderDateClick,
     showNextMonth,
@@ -12,9 +12,11 @@ function DatesRangePickerContent(props) {
     datesRange,
     closePopup,
     setDatesRange,
+    inputType,
+    switchMode,
   } = props;
   return (
-    <React.Fragment>
+    <>
       <PickerHeader
         onDateClick={handleHeaderDateClick}
         onNextBtnClick={showNextMonth}
@@ -25,14 +27,16 @@ function DatesRangePickerContent(props) {
         width="7"
         closePopup={closePopup}
       />
-      <DatePickerComponent
+      <DayPickerPopup
         datesRange={datesRange}
         setDatesRange={setDatesRange}
         showedMonth={dateToShow}
+        inputType={inputType}
+        switchMode={switchMode}
       />
-    </React.Fragment>
+    </>
   );
-}
+};
 DatesRangePickerContent.propTypes = {
   handleHeaderDateClick: PropTypes.func,
   showNextMonth: PropTypes.func,
@@ -41,6 +45,8 @@ DatesRangePickerContent.propTypes = {
   datesRange: PropTypes.object,
   setDatesRange: PropTypes.func,
   closePopup: PropTypes.func,
+  inputType: PropTypes.string,
+  switchMode: PropTypes.func,
 };
 
 export default DatesRangePickerContent;
