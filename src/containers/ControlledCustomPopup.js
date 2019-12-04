@@ -34,7 +34,9 @@ class ControlledCustomPopup extends Component {
       start: moment()
         .add(-1, 'days')
         .startOf('day'),
-      end: moment().endOf('day'),
+      end: moment()
+        .add(-1, 'days')
+        .endOf('day'),
     },
     {
       content: 'This Week',
