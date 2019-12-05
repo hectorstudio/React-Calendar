@@ -92,12 +92,11 @@ class DateInput extends YearPickerMixin {
 
   _onChange = e => {
     const value = e.target.value;
-
     const { dateFormat, onChange, onValidateError, onValidated } = this.props;
-
     const date = validateDate(value, dateFormat, onValidateError, onValidated);
     if (date) {
-      onChange(date);
+      const finalDate = onChange.startOf('day');
+      onChange(finalDate);
     }
     this.setState({ dateValue: value });
   };
@@ -165,7 +164,7 @@ DateInput.propTypes = {
   icon: PropTypes.any,
   /** Date formatting string.
    * Anything that that can be passed to ``moment().format``
-   */
+   **/
   dateFormat: PropTypes.string,
   startMode: PropTypes.oneOf(['year', 'month', 'day']),
   popupPosition: PropTypes.oneOf([

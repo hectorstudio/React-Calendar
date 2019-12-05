@@ -149,7 +149,7 @@ function withStateInput(WrappedComponent) {
     onDateChange = (event, data) => {
       if (WrappedComponent.META.type === DATE_INPUT) {
         const { onChange } = this.props;
-        onChange(data.value);
+        onChange(data.value.startOf('day'));
         this.onClosePopup();
       } else if (WrappedComponent.META.type === DATE_TIME_INPUT) {
         ///////////////////////////////////
@@ -364,8 +364,10 @@ function withStateInput(WrappedComponent) {
     getDatesRange = range => {
       const { dateFormat } = this.props;
       const { start, end } = range ? range : { start: null, end: null };
-      const startStr = start && start.format ? start.format(dateFormat) : '';
-      const endStr = end && end.format ? end.format(dateFormat) : '';
+      const startStr =
+        start && start.format ? start.startOf('day').format(dateFormat) : '';
+      const endStr =
+        end && end.format ? end.endOf('day').format(dateFormat) : '';
       if (startStr) return `${startStr} - ${endStr}`;
       return '';
     };
